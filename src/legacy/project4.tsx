@@ -62,7 +62,7 @@ export default function Project4() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">시행착오</h2>
           <div className="bg-gray-50 p-6 rounded-lg">
             <p className="text-gray-700 text-sm leading-relaxed mb-3">
-              이 연구는 처음에 LLM의 참신성을 정량적으로 평가하는 문제에서 시작했습니다. 참신성 점수가 포함된 에세이 데이터셋을 활용하며 기존 연구 흐름을 따라갔지만, 진행하면서 초점은 점차 <strong>"LLM을 평가자로 활용할 수 있을까?"</strong>라는 질문으로 옮겨갔습니다.
+              이 연구는 처음에 LLM의 참신성을 정량적으로 평가하는 문제에서 시작했습니다. 참신성 점수가 포함된 에세이 데이터셋을 활용하며 기존 연구 흐름을 따라갔지만, 진행하면서 초점은 점차 <strong>&ldquo;LLM을 평가자로 활용할 수 있을까?&rdquo;</strong>라는 질문으로 옮겨갔습니다.
             </p>
             <p className="text-gray-700 text-sm leading-relaxed mb-3">
               그러나 주제를 구체화하는 과정은 쉽지 않았습니다. 팀원마다 이해 수준과 관점이 달라 논의가 평행선을 달렸고, 특히 LLM을 다루면서도 기존 머신러닝의 예측·분류 문제로 단순 환원하는 경우가 많았습니다. 그 결과 <strong>연구 주제를 확정하지 못했습니다</strong>.
@@ -154,7 +154,7 @@ export default function Project4() {
                 <span className="not-italic" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>2️⃣</span> 메타 LLM 프롬프트 주입 기법
               </h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                추정된 채점자 심각도(β)를 메타 LLM 프롬프트에 정량적 지시사항으로 주입하여 동적 편향 보정을 구현했습니다. 예를 들어 "conventions: gemini(1.1446) &gt; claude(1.0914) &gt; gpt(0.8994)"와 같은 특성별 편향 순위 정보를 제공하여, 메타 LLM이 각 모델의 상대적 편향을 고려해 최종 점수를 집계하도록 했습니다. 이를 통해 기존 대비 57.9% 편향 분포 감소를 달성했으며, 이는 채점자별 점수 분산의 표준편차 감소율로 측정했습니다.
+                추정된 채점자 심각도(β)를 메타 LLM 프롬프트에 정량적 지시사항으로 주입하여 동적 편향 보정을 구현했습니다. 예를 들어 &ldquo;conventions: gemini(1.1446) &gt; claude(1.0914) &gt; gpt(0.8994)&rdquo;와 같은 특성별 편향 순위 정보를 제공하여, 메타 LLM이 각 모델의 상대적 편향을 고려해 최종 점수를 집계하도록 했습니다. 이를 통해 기존 대비 57.9% 편향 분포 감소를 달성했으며, 이는 채점자별 점수 분산의 표준편차 감소율로 측정했습니다.
               </p>
             </div>
 

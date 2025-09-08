@@ -12,8 +12,9 @@ const projectComponents = {
   4: Project4
 }
 
-export default function ProjectDetailPage({ params }: { params: { id: string } }) {
-  const projectId = parseInt(params.id)
+export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const projectId = parseInt(id)
   
   if (projectId < 1 || projectId > 4) {
     notFound()

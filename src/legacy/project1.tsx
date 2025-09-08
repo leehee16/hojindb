@@ -54,7 +54,7 @@ function Table({ headers, rows, className = "" }: TableProps) {
   );
 }
 
-function LogStatTable({ data }: { data: any[] }) {
+function LogStatTable({ data }: { data: unknown[] }) {
   const headers = ['Level', 'Module', '로그', '유니크', '유니크 비율'];
   
   const rows = [
