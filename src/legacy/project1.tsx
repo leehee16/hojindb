@@ -159,7 +159,7 @@ export default function Project1() {
             <p>
               <span className="font-semibold">추적 및 쿼리:</span> 
               <span className="bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-xs mx-1">Iceberg</span>로 테이블 버전관리, 
-              <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs mx-1">OpenLineage</span>로 라인니지 기록, 
+              <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs mx-1">OpenLineage</span>로 리니지 기록, 
               <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs mx-1">DuckDB</span>/<span className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs mx-1">Spark</span>로 쿼리
             </p>
           </div>
@@ -254,7 +254,7 @@ export default function Project1() {
                     <p className="text-gray-600 text-xs">Bronze(csv, sqlite, xml) → Silver(parquet) → Gold(parquet, csv)</p>
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 mb-2">데이터 라인니지 추적</h4>
+                    <h4 className="font-bold text-gray-900 mb-2">데이터 리니지 추적</h4>
                     <p className="text-gray-700 text-sm">OpenLineage를 통한 변환 추적</p>
                   </div>
                   <div>
