@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import PortfolioSidebar from '@/components/PortfolioSidebar'
 
 export const metadata = {
   title: "Portfolio - Hojin's Blog",
@@ -83,91 +84,157 @@ export default function PortfolioPage() {
     <div className="container mx-auto px-4 py-16 max-w-7xl">
       <div className="flex gap-8">
         {/* Left Sidebar - 인사말과 이력서 바로가기 */}
-        <aside className="w-80 hidden lg:block">
-          <div className="bg-neutral-50 p-6 sticky top-24">
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-3">안녕하세요 👋</h2>
-              <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                데이터와 개발을 통해 실제 문제를 해결하고 효율성을 높이는 것에 관심이 많은 이호진입니다.
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                각 프로젝트에서 어떤 문제를 해결했고, 어떤 성과를 얻었는지 확인해보세요.
-              </p>
-            </div>
-            
-            <div className="border-t border-gray-200 pt-6">
-              <Link 
-                href="/about"
-                className="block bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors text-center mb-4"
-              >
-                📄 상세 이력서 보기
-              </Link>
-              
-              <div className="space-y-3 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <span>📧</span>
-                  <span>hojlgg4@gmail.com</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>📱</span>
-                  <span>010-6273-9408</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>🔗</span>
-                  <a href="https://github.com/leehee16" className="text-blue-600 hover:text-blue-700">
-                    github.com/leehee16
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <PortfolioSidebar />
 
         {/* Divider */}
         <div className="w-px bg-gray-300 hidden lg:block"></div>
 
         {/* Projects Section */}
-        <section className="flex-1 max-w-2xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Portfolio</h1>
-            <p className="text-gray-600">실제 문제 해결과 효율성 향상을 위한 프로젝트들</p>
-          </div>
-          
-          <div className="space-y-6 pb-8">
-            {projects.map((project) => (
-              <div key={project.id} className="post-item border-b border-gray-200 pb-6 last:border-b-0">
-                <p className="post-author mb-3">
-                  <time className="post-author-date text-gray-500 text-sm">
-                    {project.period}
-                  </time>
-                  <span className="post-author-name text-gray-700 text-sm ml-3">
-                    {project.subtitle}
-                  </span>
-                </p>
-                
-                <Link href={`/portfolio/${project.id}`} className="block group">
-                  <h3 className="post-title text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
-                    {project.title}
-                  </h3>
-                  <p className="post-excerpt text-gray-600 text-base leading-relaxed mb-4">
-                    {project.description}
-                  </p>
-                  <p className="text-gray-900 font-semibold text-sm mb-4">
-                    🎯 {project.achievement}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techs.map((tech) => (
-                      <span 
-                        key={tech} 
-                        className={`${getTechColor(tech)} px-2 py-1 rounded text-xs font-medium`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
+        <section className="flex-1 max-w-2xl mx-auto">          
+          <div className="space-y-4 pb-8">
+            <Link href="/portfolio/1" className="block group">
+              <div className="relative overflow-hidden p-6 bg-white rounded-lg border border-gray-100 hover:border-blue-200 transition-all duration-200">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg tossface">1️⃣</span>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">내 모든 데이터가 한곳에!</h4>
                   </div>
-                </Link>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">개인 데이터 통합 레이크하우스와 파이프라인</p>
+                  <div className="flex flex-wrap gap-2">
+                    <img 
+                      src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
+                      alt="Pandas"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apache-spark&logoColor=white" 
+                      alt="Spark"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/Apache%20Iceberg-00B4D8?style=for-the-badge&logo=apache&logoColor=white" 
+                      alt="Iceberg"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 right-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-40">
+                  <img 
+                    src="/p1.png" 
+                    alt="Data Lakehouse Artwork" 
+                    className="w-80 h-80 object-cover object-top transform group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
               </div>
-            ))}
+            </Link>
+            
+            <Link href="/portfolio/2" className="block group">
+              <div className="relative overflow-hidden p-6 bg-white rounded-lg border border-gray-100 hover:border-blue-200 transition-all duration-200">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg tossface">2️⃣</span>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">사과를 파는 기업은 어떤 기업일까?</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">점진적 데이터 수집과 검색</p>
+                  <div className="flex flex-wrap gap-2">
+                    <img 
+                      src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" 
+                      alt="FastAPI"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" 
+                      alt="Next.js"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" 
+                      alt="Docker"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 right-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-40">
+                  <img 
+                    src="/p2.png" 
+                    alt="Industrial Analysis Artwork" 
+                    className="w-80 h-80 object-cover object-top transform group-hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+              </div>
+            </Link>
+            
+            <Link href="/portfolio/3" className="block group">
+              <div className="relative overflow-hidden p-6 bg-white rounded-lg border border-gray-100 hover:border-blue-200 transition-all duration-200">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg tossface">3️⃣</span>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">딸깍, 실험이 돌아간다</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">LLM 실험 오케스트레이터</p>
+                  <div className="flex flex-wrap gap-2">
+                    <img 
+                      src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
+                      alt="Pandas"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" 
+                      alt="GCP"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/OpenRouter-000000?style=for-the-badge&logo=openai&logoColor=white" 
+                      alt="OpenRouter"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 right-14 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-36 w-72">
+                  <img 
+                    src="/p3.png" 
+                    alt="LLM Experiment Orchestrator Artwork" 
+                    className="w-52 h-52 object-cover object-top transform group-hover:scale-110 transition-transform duration-300 -mt-6 ml-20"
+                  />
+                </div>
+              </div>
+            </Link>
+            
+            <Link href="/portfolio/4" className="block group">
+              <div className="relative overflow-hidden p-6 bg-white rounded-lg border border-gray-100 hover:border-blue-200 transition-all duration-200">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg tossface">4️⃣</span>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">LLM의 공정한 채점을 위해</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">인간 없이도 공정한 채점을 위한 방법론 연구</p>
+                  <div className="flex flex-wrap gap-2">
+                    <img 
+                      src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
+                      alt="Pandas"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" 
+                      alt="PyTorch"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                    <img 
+                      src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white" 
+                      alt="SciPy"
+                      className="h-6 rounded-lg opacity-70"
+                    />
+                  </div>
+                </div>
+                <div className="absolute bottom-0 right-14 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-36 w-80">
+                  <img 
+                    src="/p4.png" 
+                    alt="ADBIAS Research Artwork" 
+                    className="w-52 h-52 object-cover object-top transform group-hover:scale-110 transition-transform duration-300 mt-2 ml-24"
+                  />
+                </div>
+              </div>
+            </Link>
           </div>
         </section>
       </div>

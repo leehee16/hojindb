@@ -1,57 +1,38 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/posts'
+import { blogCategories, getCategoriesWithCount } from '@/config/categories'
+import { getSeriesWithPostCount } from '@/lib/series'
+import Banner from '@/components/banner/ui'
 
 export default function Home() {
   const posts = getAllPosts()
   const recentPosts = posts.slice(0, 2)
+  const categoriesWithCount = getCategoriesWithCount(posts)
+  const seriesWithCount = getSeriesWithPostCount(posts)
 
   return (
-    <div className="container mx-auto px-4 py-16 max-w-7xl">
-      {/* Tags Navigation */}
+    <>
+      <Banner />
+      <div className="container mx-auto px-4 py-16 max-w-7xl">
+      {/* Categories Navigation */}
       <section className="mb-12">
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link
-            href="/blog"
-            className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
-          >
-            전체
-          </Link>
-          <Link
-            href="/tags/development"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #개발
-          </Link>
-          <Link
-            href="/tags/react"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #React
-          </Link>
-          <Link
-            href="/tags/nextjs"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #Next.js
-          </Link>
-          <Link
-            href="/tags/typescript"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #TypeScript
-          </Link>
-          <Link
-            href="/tags/tech"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #기술
-          </Link>
-          <Link
-            href="/tags/life"
-            className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            #일상
-          </Link>
+          {categoriesWithCount.map((category, index) => (
+            <Link
+              key={category.name}
+              href={category.href}
+              className={
+                index === 0
+                  ? "bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
+                  : "bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+              }
+            >
+              {category.label}
+              {category.count !== undefined && category.count > 0 && (
+                <span className="ml-1 text-xs opacity-75">({category.count})</span>
+              )}
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -102,64 +83,34 @@ export default function Home() {
         {/* Series Sidebar */}
         <aside className="w-80 hidden lg:block">
           <div className="bg-neutral-50 p-6 sticky top-24">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">📚 시리즈</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-4">시리즈</h3>
             
             <div className="space-y-4">
-              <div className="pb-3 border-b border-gray-100">
-                <Link href="/series/react-mastery" className="block group">
-                  <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-                    React 마스터하기
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    React의 기초부터 고급 패턴까지
-                  </p>
-                  <div className="text-xs text-gray-400 mt-2">
-                    5편의 글
+              {seriesWithCount.length > 0 ? (
+                seriesWithCount.slice(0, 4).map((series, index) => (
+                  <div 
+                    key={series.slug} 
+                    className={`pb-3 ${index < 3 ? 'border-b border-gray-100' : ''}`}
+                  >
+                    <Link href={`/series/${series.slug}`} className="block group">
+                      <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                        {series.title}
+                      </h4>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {series.description}
+                      </p>
+                      <div className="text-xs text-gray-400 mt-2">
+                        {series.status === 'ongoing' && <span className="tossface">🔄 진행중</span>} 
+                        {series.status === 'completed' && <span className="tossface">✅ 완료</span>}
+                        {series.status === 'planned' && <span className="tossface">📅 계획중</span>}
+                        {series.postCount > 0 && ` · ${series.postCount}편의 글`}
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-              
-              <div className="pb-3 border-b border-gray-100">
-                <Link href="/series/nextjs-guide" className="block group">
-                  <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-                    Next.js 완전정복
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Next.js 프로젝트 실전 가이드
-                  </p>
-                  <div className="text-xs text-gray-400 mt-2">
-                    3편의 글
-                  </div>
-                </Link>
-              </div>
-              
-              <div className="pb-3 border-b border-gray-100">
-                <Link href="/series/typescript-deep" className="block group">
-                  <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-                    TypeScript 깊게 파기
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    타입스크립트 고급 활용법
-                  </p>
-                  <div className="text-xs text-gray-400 mt-2">
-                    4편의 글
-                  </div>
-                </Link>
-              </div>
-              
-              <div className="pb-3">
-                <Link href="/series/dev-career" className="block group">
-                  <h4 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
-                    개발자 커리어
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    개발자로 성장하는 이야기
-                  </p>
-                  <div className="text-xs text-gray-400 mt-2">
-                    진행중
-                  </div>
-                </Link>
-              </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">시리즈 준비중...</p>
+              )}
             </div>
             
             <div className="mt-6 pt-4 border-t border-gray-100">
@@ -173,6 +124,7 @@ export default function Home() {
           </div>
         </aside>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

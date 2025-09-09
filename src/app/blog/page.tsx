@@ -1,12 +1,38 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/posts'
+import { blogCategories, getCategoriesWithCount } from '@/config/categories'
+import { getTagsWithCount } from '@/config/tags'
 
 export default function BlogPage() {
   const posts = getAllPosts()
+  const categoriesWithCount = getCategoriesWithCount(posts)
+  const tagCounts = getTagsWithCount(posts)
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-4xl">
       <h1 className="text-4xl font-bold text-gray-900 mb-8">Blog</h1>
+      
+      {/* Categories Navigation */}
+      <section className="mb-8">
+        <div className="flex flex-wrap gap-2">
+          {categoriesWithCount.map((category, index) => (
+            <Link
+              key={category.name}
+              href={category.href}
+              className={
+                index === 0
+                  ? "bg-blue-600 text-white px-3 py-1.5 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
+                  : "bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+              }
+            >
+              {category.label}
+              {category.count !== undefined && category.count > 0 && (
+                <span className="ml-1 text-xs opacity-75">({category.count})</span>
+              )}
+            </Link>
+          ))}
+        </div>
+      </section>
       
       {posts.length === 0 ? (
         <p className="text-gray-600">아직 작성된 글이 없습니다.</p>

@@ -4,3 +4,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.tossface {
+  font-family: "Tossface", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  font-feature-settings: "liga" on, "clig" on;
+  font-variant-emoji: emoji;
+}
