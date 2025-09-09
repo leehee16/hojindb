@@ -155,7 +155,7 @@ export default function Project3() {
                 <span className="not-italic" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>1️⃣</span> 실험 설계 시스템 구축
               </h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                실험자가 직접 request를 작성하거나 코드를 수정하지 않아도, 동일한 규격을 공유한 상태에서 템플릿 기반으로 실험을 설계·실행할 수 있도록 했습니다.
+                실험자가 직접 코드를 수정하지 않아도, 동일한 규격을 공유한 상태에서 템플릿 기반으로 실험을 설계·실행할 수 있도록 했습니다.
               </p>
             </div>
 

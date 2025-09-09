@@ -107,8 +107,8 @@ export default function PortfolioPage() {
                       className="h-6 rounded-lg opacity-70"
                     />
                     <img 
-                      src="https://img.shields.io/badge/Apache%20Spark-E25A1C?style=for-the-badge&logo=apache-spark&logoColor=white" 
-                      alt="Spark"
+                      src="https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=databricks&logoColor=white" 
+                      alt="SQL"
                       className="h-6 rounded-lg opacity-70"
                     />
                     <img 
