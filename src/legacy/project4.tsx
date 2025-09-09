@@ -145,7 +145,7 @@ export default function Project4() {
                 <span className="not-italic" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>1️⃣</span> PyTorch 기반 MFRM 추정 모듈 개발
               </h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                기존 R 라이브러리 기반 MFRM은 시작값에 따라 결과가 달라지고 최적해를 찾지 못하는 문제가 있었습니다. 이를 해결하기 위해 <strong>PyTorch로 MFRM을 새로 구현</strong>하여 더 안정적으로 각 LLM의 편향 정도를 측정할 수 있도록 했습니다. 딥러닝의 역전파 알고리즘을 활용해 모델이 스스로 최적의 편향값을 찾아가도록 하고, 편향값들의 평균을 0으로 맞춰 상대적 비교가 가능하게 했습니다.
+                기존 R 라이브러리 기반 MFRM은 시작값에 따라 결과가 달라지고 최적값을 추정하는데 2시간이상 소요되는(10만row 이상, 채점자 5명 이상) 문제가 있었습니다. 이를 해결하기 위해 <strong>PyTorch로 MFRM을 구현</strong>하여 더 안정적으로 각 LLM의 편향 정도를 측정할 수 있도록 했습니다. 
               </p>
             </div>
 
