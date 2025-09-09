@@ -358,8 +358,9 @@ export default function Project1() {
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">토스앱 로그 분석</h2>
           <p className="text-gray-700 italic mb-6">
-            <strong>2025-04-08~2025-08-27</strong>의 디바이스 로그를 분석했습니다. 
-            로그파일과 date가 100% 일치했습니다. 데이터가 모두 디바이스에서 생성되었다고 짐작할 수 있습니다.
+            데이터를 적재한 후, 스마트폰의 디바이스 로그와 토스뱅크 거래내역을 뽑아 분석을 진행했습니다. 
+            앱 로그의 경우, <strong>2025-04-08~2025-08-27</strong>의 데이터가 수집하였고, 거래내역의 경우, 2021년부터 데이터를 수집했습니다.
+            로그는 일자별로 구분되어 기록되고 있었는데, 로그파일과 date가 100% 일치하는 것으로 보아, 데이터가 모두 디바이스에서 생성되었다고 짐작할 수 있습니다.
           </p>
           
 
@@ -430,17 +431,17 @@ export default function Project1() {
                   <span className="text-sm text-blue-600 font-medium mr-3">02</span>토스뱅크 거래내역과 앱 이벤트 결합 분석
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  금융 거래를 앱 내부 이벤트로 간주하고 분석을 진행했습니다.
+                  금융 거래를 앱 내부 이벤트와 동일한 단위로 간주하고 분석을 진행했습니다.
                 </p>
               </div>
               
               <div className="p-6">
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">시간 근접도 분석</h4>
+                    <h4 className="font-bold text-blue-600">시간 근접 분석</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
-                      전체 거래 중 <strong>약 4%만</strong>이 거래 시각 60분 내에 주요 앱 이벤트(Startup finish, AirDrop start)가 존재했습니다. 
-                      가장 많이 매칭된 이벤트는 Startup finish였고, 일부는 AirDrop 스캔 직후에 거래가 기록되기도 했습니다. 
+                      전체 거래 중 약 <strong>4%</strong>만이 거래 시각 60분 내에 주요 앱 이벤트(Startup finish, AirDrop start)가 존재했습니다. 
+                      가장 많이 매칭된 이벤트는 Startup finish였고, 일부는 AirDrop 스캔 직후에 거래가 기록되기도 했습니다. 즉, 토스앱을 키고 
                       이는 거래가 <strong>토스 앱 외 채널에서 발생</strong>했다고 할 수 있습니다.
                     </p>
                   </div>
