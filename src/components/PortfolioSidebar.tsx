@@ -50,7 +50,7 @@ export default function PortfolioSidebar() {
             <span className="tossface">🧾</span> 이력서 보기
           </Link>
           
-          <div className="space-y-2 text-sm text-gray-600">
+          <div className="space-y-2 text-sm text-gray-600 mt-8 ml-4">
             <div className="flex items-center gap-3">
               <span className="tossface text-base">📧</span>
               <span>hojlgg4@gmail.com</span>
