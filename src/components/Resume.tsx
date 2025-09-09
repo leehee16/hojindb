@@ -166,7 +166,7 @@ export default function Resume() {
               
               <div className="ml-4 space-y-0 text-sm">
                 <p className="text-gray-700">LLM 채점자 편향 문제 해결을 위한 MFRM 기반 보정 방법론 연구 논문</p>
-                <p className="text-black font-bold">QWK 정확도 6.4%p 향상 및 편향 분포 57.9% 감소</p>
+                <p className="text-black font-bold">QWK 정확도 6.4% 향상 및 편향 분포 57.9% 감소</p>
                 <div className="flex flex-wrap gap-1">
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mx-1">Pandas</span>
                   <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs mx-1">NumPy</span>
