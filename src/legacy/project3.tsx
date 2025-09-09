@@ -178,24 +178,6 @@ export default function Project3() {
             </div>
           </div>
         </section>
-
-        <section className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">주요 성과</h2>
-          <div className="bg-gray-50 p-6 rounded-lg">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg text-center">
-                <div className="text-3xl font-bold text-blue-600">5개</div>
-                <div className="text-sm text-gray-600 mt-1">API키당 동시 실험</div>
-                <div className="text-xs text-gray-500">API 호출한계 기반 계산</div>
-              </div>
-              <div className="bg-white p-4 rounded-lg text-center">
-                <div className="text-3xl font-bold text-blue-600">100%</div>
-                <div className="text-sm text-gray-600 mt-1">메타데이터 추적</div>
-                <div className="text-xs text-gray-500">ERD 기반 체계화</div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );
