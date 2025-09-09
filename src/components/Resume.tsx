@@ -25,7 +25,7 @@ export default function Resume() {
               보고서 생성 자동화와 유저 모니터링 효율화 업무에서 <strong>85%, 91%의 업무 시간을 단축</strong>했습니다.
             </p>
             <p className="text-gray-700 leading-relaxed mt-4">
-              조직의 업무 효율화에 지속적으로 관심을 갖고 참여하면서, 어떤 솔루션을 적용하든 본질적으로 필요한 것은 <strong>데이터</strong>라는 것을 실감합니다. 그 데이터가 생성되고 흘러가는 과정에서 <strong>조직과 사람의 의도가 투영</strong>된다고 생각합니다.
+              데이터의 생성과 수집, 저장과 변환, 분석과 시각화, 그리고 현업에서 활용되기까지의 과정을 경험했습니다.
             </p>
             <p className="text-gray-700 leading-relaxed mt-4">
               토스의 다양한 서비스에서 생성되는 데이터 속에서, 이러한 경험을 바탕으로 <strong>의사결정을 지원하고 현업에서 즉시 활용할 수 있는 신뢰성 높은 데이터</strong>를 만들고 싶습니다.
