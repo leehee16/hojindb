@@ -107,7 +107,17 @@ export default function Project1() {
                   토스앱 로그, 금융 거래내역, 사진 메타데이터, 운동 기록 등 일상 속 파편화된 데이터를 통합하여 
                   <strong> 의미있는 인사이트</strong>로 전환하는 데이터 레이크하우스를 설계했습니다.
                 </p>
-                <div className="bg-white/70 p-3 rounded-lg">
+                <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                  스마트폰, 랩탑등에서 가져올 수 있는 시계열 데이터를 모아서 사용자(나)를 더 잘 <strong>이해할 수 있도록</strong> 기반을 마련하는것이 프로젝트의 목표입니다.
+                </p>
+                <div className="mx-auto flex w-full max-w-md flex-wrap items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-xs font-semibold text-gray-700 mb-4">
+                  <span>원천 데이터</span>
+                  <span className="text-gray-400">→</span>
+                  <span>레이크하우스</span>
+                  <span className="text-gray-400">→</span>
+                  <span>분석</span>
+                </div>
+                <div className="mx-auto w-full max-w-md rounded-lg border border-gray-200 bg-white px-4 py-3">
                   <div className="grid grid-cols-3 gap-3 text-center text-xs">
                     <div>
                       <div className="font-bold text-blue-600">124K+</div>
@@ -137,8 +147,8 @@ export default function Project1() {
                       <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>1️⃣</span>
                     </div>
                     <div className="text-sm">
-                      <span className="font-semibold text-gray-900">데이터 정합성</span>
-                      <div className="text-gray-600 text-xs">리니지 추적, 품질 관리, Iceberg 적재</div>
+                      <span className="font-semibold text-gray-900">데이터가 쓸 수 있도록 만들기</span>
+                      <div className="text-gray-600 text-xs">데이터 정합성</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -146,8 +156,8 @@ export default function Project1() {
                       <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>2️⃣</span>
                     </div>
                     <div className="text-sm">
-                      <span className="font-semibold text-gray-900">스키마 설계</span>
-                      <div className="text-gray-600 text-xs">차원/팩트 테이블 구조 정의</div>
+                      <span className="font-semibold text-gray-900">데이터 형태 정의하기</span>
+                      <div className="text-gray-600 text-xs">스키마 설계</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -155,8 +165,8 @@ export default function Project1() {
                       <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>3️⃣</span>
                     </div>
                     <div className="text-sm">
-                      <span className="font-semibold text-gray-900">데이터 탐색</span>
-                      <div className="text-gray-600 text-xs">로그 구조 분석, URLScheme 발견</div>
+                      <span className="font-semibold text-gray-900">로그 데이터 살펴보기</span>
+                      <div className="text-gray-600 text-xs">데이터 탐색</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -165,7 +175,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">행동 데이터로 변환하기</span>
-                      <div className="text-gray-600 text-xs">URLScheme로그를 기능단위로 분류하여 카디널리티 줄이기</div>
+                      <div className="text-gray-600 text-xs">도메인 카디널리티를 줄이기 위한 방법</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -173,8 +183,8 @@ export default function Project1() {
                       <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>5️⃣</span>
                     </div>
                     <div className="text-sm">
-                      <span className="font-semibold text-gray-900">세션 정의</span>
-                      <div className="text-gray-600 text-xs">10분 기준 사용자 행동 시퀀스 구분</div>
+                      <span className="font-semibold text-gray-900">세션 정의하기</span>
+                      <div className="text-gray-600 text-xs">10분  사용자 행동 시퀀스 구분</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -225,52 +235,51 @@ export default function Project1() {
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
               <strong>셋째, 가공한 데이터가 분석 목표에 적합한지 테스트하기위해 분석해보았습니다.</strong><br/>
-              예를들어 내가 어떤 서비스를 이용하고, 어떤 서비스가 내 행위에 영향을 받고, 서비스의 시퀀스가 어떻게 영향을 받는지 파악하기 위해 아래와 같은 마트를 구성할 수 있도록 하는 것이 목표입니다.
+              예를들어 내가 어떤 서비스를 이용하고, 어떤 서비스가 내 행위에 영향을 받고, 서비스의 시퀀스가 어떻게 영향을 받는지 파악하기 위해 아래와 같은 마트를 구성할 수도 있겠습니다.
             </p>
 
-            {/* 목표 테이블 구조 */}
+            {/* 목표 테이블 구조 & 세션 컨텍스트 */}
             <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4">
-              <Table
-                headers={[
-                  'session_id', 'event_order', 'event_time', 'event_type', 'service', 'duration_sec'
-                ]}
-                rows={[
-                  [
-                    's001', '1', '2025-07-01 09:05:00', 'supertoss_home', 'supertoss', '30'
-                  ],
-                  [
-                    's001', '3', '2025-07-01 09:07:30', 'banktoss_detail', 'banktoss', '600'
-                  ],
-                  [
-                    's002', '2', '2025-07-01 12:16:00', 'securities_portfolio', 'securities', '450'
-                  ],
-                  [
-                    's003', '1', '2025-07-01 15:30:00', 'bank_transfer_init', 'bank', '45'
-                  ]
-                ]}
-                className="text-xs"
-              />
-            </div>
+              <div className="space-y-4">
+                <Table
+                  headers={[
+                    'session_id', 'event_order', 'event_time', 'event_type', 'service', 'duration_sec'
+                  ]}
+                  rows={[
+                    [
+                      's001', '1', '2025-07-01 09:05:00', 'supertoss_home', 'supertoss', '30'
+                    ],
+                    [
+                      's001', '3', '2025-07-01 09:07:30', 'banktoss_detail', 'banktoss', '600'
+                    ],
+                    [
+                      's002', '2', '2025-07-01 12:16:00', 'securities_portfolio', 'securities', '450'
+                    ],
+                    [
+                      's003', '1', '2025-07-01 15:30:00', 'bank_transfer_init', 'bank', '45'
+                    ]
+                  ]}
+                  className="text-xs"
+                />
 
-            {/* 세션 컨텍스트 테이블 - 피벗 형식 */}
-            <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 mt-4">
-              <Table
-                headers={[
-                  'session_id', 'steps_before', 'photos_during', 'notes_during', 'txn_after'
-                ]}
-                rows={[
-                  [
-                    's001', '12034', '4', '0', '200000'
-                  ],
-                  [
-                    's002', '540', '0', '3', '0'
-                  ],
-                  [
-                    's003', '8200', '2', '1', '50000'
-                  ]
-                ]}
-                className="text-xs"
-              />
+                <Table
+                  headers={[
+                    'session_id', 'steps_before', 'photos_during', 'notes_during', 'txn_after'
+                  ]}
+                  rows={[
+                    [
+                      's001', '12034', '4', '0', '200000'
+                    ],
+                    [
+                      's002', '540', '0', '3', '0'
+                    ],
+                    [
+                      's003', '8200', '2', '1', '50000'
+                    ]
+                  ]}
+                  className="text-xs"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -739,15 +748,6 @@ transformed = transformed.filter(
                 <div className="space-y-6">
 
             <div className="mb-6">
-              <ol className="text-sm text-gray-700 space-y-1 mb-3">
-                <li>1. AppDomainPlugin-com.vivarepublica.cash.notiService</li>
-                <li>2. AppDomainPlugin-3.com.vivarepublica.cash.WidgetExtension</li>
-                <li>3. AppDomain-com.vivarepublica.cash / Log</li>
-              </ol>                          
-              <p className="text-gray-700 mb-3">
-                토스 애플리케이션의 로그 데이터는 총 3군데 나눠서 저장되고 있었습니다. 이 데이터를 모두 적재한뒤, 아래와 같이 시간축으로 시각화를 해보았습니다.
-              </p>
-
               <div className="bg-gray-200 rounded-lg shadow-md p-4">
                 <Image
                   src="/applog.png"
@@ -760,6 +760,19 @@ transformed = transformed.filter(
               <p className="text-sm text-gray-500 text-center mt-2">
                 시간대별 모듈별 로그 발생 패턴 - 일단위로 균일한 발생 패턴을 보여줍니다.
               </p>
+
+              <div className="mt-5 space-y-2">
+                <ol className="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                  <li>AppDomainPlugin-com.vivarepublica.cash.notiService</li>
+                  <li>AppDomainPlugin-3.com.vivarepublica.cash.WidgetExtension</li>
+                  <li>AppDomain-com.vivarepublica.cash / Log</li>
+                </ol>
+                <p className="text-sm text-gray-700">
+                  토스 애플리케이션의 로그는 notiService,WidgetExtension,Log 총 3개의 폴더에 적재되어 있었습니다. 이 로그들을 하나로 모아 시간축으로 정렬해 패턴을 확인했습니다.
+                  위의 그래프는 x축은 날짜 y축은 시간인데, 5개월간 상당히 균등한 패턴을 보여줍니다. 0시부터 6시까지는 발생이 미미했고, 7시,12시,18시에 집중적으로 생성되는 것을 확인 할 수 있습니다.
+                  그러나, 이 로그가 사용자인 나의 <strong>액션으로 부터 발생</strong>했는지 시각적 분포로는 확신하기 어려웠습니다.
+                </p>
+              </div>
             </div>
             <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4">
               <h4 className="font-bold text-gray-900 mb-3">로그 레벨 및 모듈별 분포</h4>
@@ -839,7 +852,7 @@ transformed = transformed.filter(
                     </div>
                   </div>
                   <div className="mt-3 pt-2 border-t border-gray-200">
-                    <p className="text-xs text-gray-600"><span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>⭐</span> 사용자 액션 로그</p>
+                    <p className="text-xs text-gray-600"><span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>⭐</span> 사용자 액션 로그로 사용</p>
                   </div>
                 </div>
               </div>
@@ -847,9 +860,9 @@ transformed = transformed.filter(
 
             <div className="mb-4">
               <p className="text-gray-700 mb-3">
-                앱로그는 분명 프론트엔드에서 발생한 데이터입니다. 또한 &apos;*.log&apos;날짜와 로그의 날짜가 모두 일치하는 것으로 보아 데이터 발생지점과 적재지점이 같습니다. 즉, 기기에서 오롯이 생성된 데이터라고 판단할 수 있습니다.
-                여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 실패의 경우를 로깅하는 데이터였습니다. 문제는 이 로그가 나의 액션으로 생성되었는지 알 수 없다는 점이었습니다.
-                로그마다 내 행동을 대변해줄 수 있는 데이터를 찾다가..
+                더 자세히 로그를 들여다보면, 로그가 분명 프론트엔드에서 발생한 데이터라는 것을 알 수 있었습니다. &apos;*.log&apos;날짜와 로그의 날짜가 모두 일치하는 것으로 보아 데이터 발생지점과 적재지점이 같기 때문입니다. 즉, 기기에서 오롯이 생성된 데이터라고 판단할 수 있습니다.
+                여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 캐시 실패의 경우를 로깅하는 데이터였습니다. 
+                
               </p>
               <div className="mb-4">
                 <div className="bg-gray-200 rounded-lg shadow-md p-4">
