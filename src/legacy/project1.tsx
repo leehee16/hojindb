@@ -360,7 +360,7 @@ export default function Project1() {
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">
                   <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🏗️</span>
-                  개인 데이터 레이크하우스 구축
+                  마이 데이터 레이크하우스 구축
                 </h3>
                 <p className="text-gray-700 text-sm leading-relaxed mb-4">
                   토스앱 로그, 금융 거래내역, 사진 메타데이터, 운동 기록 등 일상 속 파편화된 데이터를 통합하여 
@@ -416,7 +416,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">데이터 형태 정의하기</span>
-                      <div className="text-gray-600 text-xs">스키마 설계 : 고가용성 데이터 형태 만들기</div>
+                      <div className="text-gray-600 text-xs">스키마 설계 : 재사용이 용이한 데이터 형태 만들기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -443,7 +443,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">세션 정의하기</span>
-                      <div className="text-gray-600 text-xs">10분  사용자 행동 시퀀스 구분</div>
+                      <div className="text-gray-600 text-xs">가장 적합한 세션 구분 기준 정하기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -451,8 +451,8 @@ export default function Project1() {
                       <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>6️⃣</span>
                     </div>
                     <div className="text-sm">
-                      <span className="font-semibold text-gray-900">핵심 인사이트</span>
-                      <div className="text-gray-600 text-xs">운동량 임계값, 거래 전환 패턴 발견</div>
+                      <span className="font-semibold text-gray-900">데이터 품질 테스트해보기</span>
+                      <div className="text-gray-600 text-xs">간단한 데이터 분석을 통해 데이터 품질을 테스트</div>
                     </div>
                   </div>
                 </div>
@@ -895,7 +895,7 @@ transformed = transformed.filter(
                 <span className="text-sm text-blue-600 font-medium mr-3">02</span>테이블 스키마
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                디멘젼 테이블과 팩트 테이블 구조 정의
+                다양한 분석 목적에 대응할 수 있도록 유연하게 설계하고자 했습니다.
               </p>
             </div>
 
@@ -1412,7 +1412,7 @@ GROUP BY session_id, session_start, session_end
 ORDER BY session_start;`}
                   >
                     <p className="text-gray-700 text-sm">
-                      세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다. 또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다. 따라서 아래의 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
+                      세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다. 또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다. 따라서 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
                     </p>
                   </CodeToggle>
                 </div>
@@ -1425,22 +1425,22 @@ ORDER BY session_start;`}
             <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  <span className="text-sm text-blue-600 font-medium mr-3">06</span>주요 분석 결과
+                  <span className="text-sm text-blue-600 font-medium mr-3">06</span>간단 데이터 분석
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  데이터 분석을 통해 도출한 핵심 인사이트와 발견사항
+                  데이터를 분석해보면서 데이터의 품질을 체크해보았습니다.
                 </p>
               </div>
 
               <div className="p-6">
                 <div className="space-y-6">
                   <div className="mb-6">
-                    <h4 className="font-bold text-blue-600 mb-3">세션 증가 요인 TOP 4</h4>
+                    <h4 className="font-bold text-blue-600 mb-3">세션 수 증가 요인 TOP 4</h4>
                     <div className="bg-gray-200 rounded-lg p-4">
                       <Table
-                        headers={['순위', '요인', '최대 증가율', '상관계수', '핵심 임계값']}
+                        headers={['순위', '요인', '최대 증가율', '상관계수', '임계값']}
                         rows={[
-                          ['1', '🏃 Movement', '+359.7%', '0.471', '10,000보+'],
+                          ['1', '🏃 Movement', '+359.7%', '0.571', '10,000보+'],
                           ['2', '📸 Photo', '+326.9%', '0.436', '4-10장'],
                           ['3', '💰 Transaction', '+393.6%', '0.465', '2-3건 큰 거래액'],
                           ['4', '📝 Notes', '+271.0%', '-', 'Daily 노트']
@@ -1448,13 +1448,25 @@ ORDER BY session_start;`}
                         className="text-sm"
                       />
                     </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      앱내 세션 앞으로 운동,사진,거래,노트기록을 앱사용을 유발할 이벤트로 가정하고 상관관계를 조사해보았습니다.
+                      예를들어, 만보 이상 걷는 이벤트가 있을경우 앱 사용량(세션수)가 3배정도 상승했습니다.
+                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      종합하자면, 활동량이 많은 경우 앱사용이 증가하는 양상을 보였는데 이는 스마트폰 사용량에 따른 상관성이 아닐까 추측됩니다.
+                      노트작성을 제외한 다른 이벤트들은 모두 스마트폰 사용중 기록되기 때문입니다. 또한, 이 스마트폰에서 생성되는 데이터간 차이도 생각보다 유의하지 않을 것으로 생각되는데, 그 이유는
+                      데이터 스케일 차이 때문입니다. 발생량이 많은 데이터는 그만큼 많은 앱사용세션과 연결될 수 있습니다. 
+                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      따라서, <strong>데이터의 양과 원천을 반영할 수 있는 구조</strong>가 필요합니다.
+                    </p>
                   </div>
 
                   <div className="mb-6">
                     <h4 className="font-bold text-blue-600 mb-3">앱 내부 패턴 → 거래 전환 분석</h4>
                     <div className="bg-gray-200 rounded-lg p-4">
                       <Table
-                        headers={['이벤트 명', '이벤트 키', '평균 전환 시간', '중간값 전환 시간', '총 전환 수']}
+                        headers={['이벤트 명', '이벤트', '평균 전환 시간', '중간값 전환 시간', '총 전환 수']}
                         rows={[
                           ['소비 내역 조회', 'supertoss|home|/consumption', '25.0분', '5.2분', '30회'],
                           ['은행탭 계좌', 'supertoss|banktab|/account', '25.5분', '7.6분', '93회'],
@@ -1465,6 +1477,9 @@ ORDER BY session_start;`}
                         className="text-xs"
                       />
                     </div>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      ㅇㅇ
+                    </p>
                   </div>
                 </div>
               </div>
