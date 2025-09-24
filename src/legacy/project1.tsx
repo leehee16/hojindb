@@ -63,11 +63,11 @@ function Table({ headers, rows, className = "" }: TableProps) {
 
 export default function Project1() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-    supertoss: true,
-    servicetoss: true,
-    securitiestoss: true,
-    banktoss: true,
-    intoss: true
+    supertoss: false,
+    servicetoss: false,
+    securitiestoss: false,
+    banktoss: false,
+    intoss: false
   });
 
   const toggleSection = (key: keyof typeof expandedSections) => {
@@ -1220,13 +1220,6 @@ ORDER BY session_start;`}
                       세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다. 또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다. 따라서 아래의 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
                     </p>
                   </CodeToggle>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-bold text-gray-900 mb-2">세션 분석 결과</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      세션 기반 분석을 통해 사용자의 앱 내 행동 패턴과 기능 탐색 과정을 체계적으로 추적할 수 있게 되었습니다.
-                      개별 이벤트가 아닌 <strong>연결된 행동 시퀀스로 사용자 의도를 이해</strong>할 수 있는 기반을 마련했습니다.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
