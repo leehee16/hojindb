@@ -97,7 +97,7 @@ export default function PortfolioPage() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg tossface">1️⃣</span>
-                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">개인 데이터 레이크하우스</h4>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">개인 데이터 레이크하우스 <span className="tossface">⭐</span></h4>
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">파편화된 일상 데이터를 통합·정제해 분석 가능한 형태로 전환</p>
                   <div className="flex flex-wrap gap-2">

@@ -185,9 +185,9 @@ export default function Project4() {
                 <div className="text-xs text-gray-500">모델별 과대/과소 완화</div>
               </div>
               <div className="bg-white p-4 rounded-lg text-center">
-                <div className="text-3xl font-bold text-blue-600">3배</div>
+                <div className="text-3xl font-bold text-blue-600">60%</div>
                 <div className="text-sm text-gray-600 mt-1">처리 속도 향상</div>
-                <div className="text-xs text-gray-500">EM 알고리즘 대비</div>
+                <div className="text-xs text-gray-500">EM 알고리즘 대비(채점자 3명 기준)</div>
               </div>
             </div>
           </div>
