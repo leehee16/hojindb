@@ -1054,7 +1054,7 @@ transformed = transformed.filter(
                         <Table
                           headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
                           rows={[
-                            ['servicetoss_other', '317', '55.6%', '137개', '분류되지 않은 다양한 서비스'],
+                            ['servicetoss_other', '317', '55.6%', '137개', '기타 서비스'],
                             ['servicetoss_rewards', '100', '17.5%', '20개', '포인트/이벤트/래플'],
                             ['servicetoss_mobility', '65', '11.4%', '5개', '교통/모빌리티 서비스'],
                             ['servicetoss_government', '38', '6.7%', '12개', '세금/정부 서비스'],
@@ -1092,7 +1092,7 @@ transformed = transformed.filter(
                         <Table
                           headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
                           rows={[
-                            ['securitiestoss_stocks', '56', '76.7%', '30개', '개별 종목 (US, AMX, NAS 등)'],
+                            ['securitiestoss_stocks', '56', '76.7%', '30개', '주식/ETF'],
                             ['securitiestoss_info', '14', '19.2%', '6개', '투자 정보/이벤트'],
                             ['securitiestoss_other', '3', '4.1%', '2개', '기타 기능']
                           ]}
