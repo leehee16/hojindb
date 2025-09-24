@@ -97,9 +97,9 @@ export default function PortfolioPage() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg tossface">1️⃣</span>
-                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">내 모든 데이터가 한곳에!</h4>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">개인 데이터 레이크하우스</h4>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-3">개인 데이터 통합 레이크하우스와 파이프라인</p>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">파편화된 일상 데이터를 통합·정제해 분석 가능한 형태로 전환</p>
                   <div className="flex flex-wrap gap-2">
                     <img 
                       src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
@@ -133,9 +133,9 @@ export default function PortfolioPage() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg tossface">2️⃣</span>
-                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">사과를 파는 기업은 어떤 기업일까?</h4>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">표준 산업 분류 검색 시스템</h4>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-3">점진적 데이터 수집과 검색</p>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">산업에서 기업·제품으로 이어지는 다단계 매핑과 탐색 구조 구축</p>
                   <div className="flex flex-wrap gap-2">
                     <img 
                       src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" 
@@ -169,9 +169,9 @@ export default function PortfolioPage() {
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-lg tossface">3️⃣</span>
-                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">딸깍, 실험이 돌아간다</h4>
+                    <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">LLM 실험 오케스트레이터</h4>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-3">LLM 실험 오케스트레이터</p>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">인퍼런스 실험 자동화 툴 개발</p>
                   <div className="flex flex-wrap gap-2">
                     <img 
                       src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 

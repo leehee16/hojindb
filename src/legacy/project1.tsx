@@ -457,7 +457,7 @@ export default function Project1() {
                 title="1. 데이터 리니지 추적"
                 code={`# OpenLineage 클라이언트 with File Transport
 file_config = FileConfig(
-    log_file_path=str(lineage_dir / "etl_jobs" / "toss_logs_lineage.json"),
+    log_file_path=str(lineage_dir / "etl_jobs" / "logs_lineage.json"),
     append=True
 )
 self.client = OpenLineageClient(transport=FileTransport(file_config))
@@ -470,7 +470,7 @@ event = RunEvent(
     job=job,
     inputs=[],
     outputs=[],
-    producer="dade-etl-toss-logs"
+    producer="dade-etl-logs"
 )
 self.client.emit(event)
 
@@ -482,7 +482,7 @@ event = RunEvent(
     job=job,
     inputs=input_datasets,
     outputs=output_datasets,
-    producer="dade-etl-toss-logs"
+    producer="dade-etl-logs"
 )
 self.client.emit(event)`}
               >
@@ -544,7 +544,7 @@ TBLPROPERTIES (
 )
 """)
 
-# Iceberg 적재 (MERGE 전략)
+# Iceberg 적재 (MERGE)
 merge_result = spark.sql("""
     MERGE INTO local.silver.fact_app_logs target
     USING staging_logs source
