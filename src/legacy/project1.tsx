@@ -1,13 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import Image from 'next/image';
 import CodeToggle from '@/components/CodeToggle';
 
 // Table 컴포넌트 인라인 정의
+interface TableCellObject {
+  content: ReactNode;
+  rowspan?: number;
+  className?: string;
+  colspan?: number;
+  onClick?: () => void;
+  buttonClassName?: string;
+}
+
+type TableCell = string | number | TableCellObject;
+
 interface TableProps {
   headers: string[];
-  rows: (string | number | { content: string | number; rowspan?: number; className?: string })[][];
+  rows: TableCell[][];
   className?: string;
 }
 
@@ -28,20 +39,47 @@ function Table({ headers, rows, className = "" }: TableProps) {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100">
-          {rows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="hover:bg-gray-50/50 transition-colors">
-              {row.map((cell, cellIndex) => {
-                if (typeof cell === 'object' && cell !== null) {
-                  return (
-                    <td
-                      key={cellIndex}
-                      className={`px-4 py-3 text-gray-800 ${cell.className || ''}`}
-                      rowSpan={cell.rowspan}
-                    >
-                      {cell.content}
-                    </td>
-                  );
-                } else {
+          {rows.map((row, rowIndex) => {
+            const clickableCell = row.find((cell) => typeof cell === 'object' && cell !== null && (cell as TableCellObject).onClick) as TableCellObject | undefined;
+            const rowOnClick = clickableCell?.onClick;
+            const isRowClickable = Boolean(rowOnClick);
+
+            return (
+              <tr
+                key={rowIndex}
+                className={`transition-colors ${isRowClickable ? 'hover:bg-blue-50/50 cursor-pointer' : 'hover:bg-gray-50/50'}`}
+                onClick={rowOnClick}
+                onKeyDown={(event) => {
+                  if (!isRowClickable) return;
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    rowOnClick?.();
+                  }
+                }}
+                role={isRowClickable ? 'button' : undefined}
+                tabIndex={isRowClickable ? 0 : undefined}
+              >
+                {row.map((cell, cellIndex) => {
+                  if (typeof cell === 'object' && cell !== null && 'content' in cell) {
+                    const tableCell = cell as TableCellObject;
+                    const innerContent = tableCell.buttonClassName ? (
+                      <div className={tableCell.buttonClassName}>{tableCell.content}</div>
+                    ) : (
+                      tableCell.content
+                    );
+
+                    return (
+                      <td
+                        key={cellIndex}
+                        className={`px-4 py-3 text-gray-800 ${isRowClickable ? 'select-none' : ''} ${tableCell.className || ''}`}
+                        rowSpan={tableCell.rowspan}
+                        colSpan={tableCell.colspan}
+                      >
+                        {innerContent}
+                      </td>
+                    );
+                  }
+
                   return (
                     <td
                       key={cellIndex}
@@ -50,10 +88,10 @@ function Table({ headers, rows, className = "" }: TableProps) {
                       {cell}
                     </td>
                   );
-                }
-              })}
-            </tr>
-          ))}
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -62,6 +100,7 @@ function Table({ headers, rows, className = "" }: TableProps) {
 
 
 export default function Project1() {
+  const [schemaDetail, setSchemaDetail] = useState<string | null>(null);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     supertoss: false,
     servicetoss: false,
@@ -70,12 +109,232 @@ export default function Project1() {
     intoss: false
   });
 
+  const schemaDescriptions: Record<string, string> = {
+    dim_date: 'dim_date는 여러 날짜 범주를 쉽게 꺼내기 위해 10개년치를 미리 생성해둔 날짜 차원입니다.',
+    dim_merchant: 'dim_merchant는 거래내역에서 추출한 거래 주체를 분류하기 위한 테이블로, 현재 고도화가 필요한 상태입니다.',
+    dim_bus_stop: 'dim_bus_stop은 fact_photo_metadata의 위치 해상도를 보완하기 위해 만든 앵커 역할의 좌표 테이블입니다.',
+    dim_toss_event: 'dim_toss_event는 앱 로그 이벤트를 사용자 행동 흐름으로 매핑한 테이블이며, 보다 보편적인 조인 구조를 마련하기 위해 재설계 중입니다.',
+    fact_app_logs: 'fact_app_logs는 앱 로그 이벤트를 한 건씩 기록하는 테이블로 현재는 토스 로그만 담고 있으며, 다른 앱 로그도 수용하기 위한 스키마 개편을 진행 중입니다.',
+    fact_transaction: 'fact_transaction에는 1년치 신용카드 거래내역과 4년치 토스뱅크 거래내역을 함께 적재했습니다.',
+    fact_movement: 'fact_movement는 걸음 수, 칼로리, 이동 거리 등 6년치 활동 데이터를 저장합니다.',
+    fact_obsidian_notes: 'fact_obsidian_notes는 Obsidian에서 작성한 마크다운 문서의 메타데이터를 보관하는 테이블입니다.',
+    fact_photo_metadata: 'fact_photo_metadata는 사진 촬영 시각과 위치 정보를 담지만, 특정 시간대에 집중되는 특성 때문에 신뢰성이 떨어지는 데이터였습니다.'
+  };
+
+  const dimensionSchemaData = [
+    {
+      id: 'dim_date',
+      name: 'dim_date',
+      description: '날짜 차원',
+      columns: 'date_key, year, quarter, month',
+      remark: '2020-2030년'
+    },
+    {
+      id: 'dim_merchant',
+      name: 'dim_merchant',
+      description: '거래처 정보',
+      columns: 'merchant_key, merchant_name, category',
+      remark: '926개 거래처'
+    },
+    {
+      id: 'dim_bus_stop',
+      name: 'dim_bus_stop',
+      description: '위치/정류장 정보',
+      columns: 'latitude, longitude, geohash, admin_name',
+      remark: '206,018개 정류장'
+    },
+    {
+      id: 'dim_toss_event',
+      name: 'dim_toss_event',
+      description: '토스 이벤트 분류',
+      columns: 'event_key, event_category, domain',
+      remark: 'URLScheme 분류'
+    }
+  ];
+
+  const factSchemaData = [
+    {
+      id: 'fact_app_logs',
+      name: 'fact_app_logs',
+      grain: '로그 이벤트 1건',
+      measures: 'event_time, log_level, module_name',
+      source: '토스앱 디바이스 로그',
+      count: '124,622건'
+    },
+    {
+      id: 'fact_transaction',
+      name: 'fact_transaction',
+      grain: '거래 1건',
+      measures: 'amount, merchant_key, txn_type',
+      source: '은행/카드 거래내역',
+      count: '5,411건'
+    },
+    {
+      id: 'fact_movement',
+      name: 'fact_movement',
+      grain: '시간별 활동 1건',
+      measures: 'steps, active_calories, distance_km',
+      source: '아이폰 헬스/운동 데이터',
+      count: '107,608건'
+    },
+    {
+      id: 'fact_obsidian_notes',
+      name: 'fact_obsidian_notes',
+      grain: '노트 작성 1건',
+      measures: 'word_count, wikilinks, tags',
+      source: 'Obsidian 메타데이터',
+      count: '517건'
+    },
+    {
+      id: 'fact_photo_metadata',
+      name: 'fact_photo_metadata',
+      grain: '사진 촬영 1건',
+      measures: 'latitude, longitude, creation_time',
+      source: '아이폰 사진 EXIF',
+      count: '17,515건'
+    }
+  ];
+
   const toggleSection = (key: keyof typeof expandedSections) => {
     setExpandedSections((prev) => ({
       ...prev,
       [key]: !prev[key]
     }));
   };
+
+  const toggleSchemaDetail = (tableName: string) => {
+    setSchemaDetail((prev) => (prev === tableName ? null : tableName));
+  };
+
+  const dimensionTableRows = dimensionSchemaData.flatMap(({ id, name, description, columns, remark }) => {
+    const isActive = schemaDetail === id;
+    const onRowToggle = () => toggleSchemaDetail(id);
+    const baseRow: TableCell[] = [
+      {
+        content: name,
+        className: `font-mono font-bold text-gray-900 ${isActive ? 'bg-blue-50' : ''}`,
+        onClick: onRowToggle,
+        buttonClassName: 'flex items-center text-sm text-gray-900'
+      },
+      {
+        content: description,
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'text-sm text-gray-900'
+      },
+      {
+        content: columns,
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'text-sm text-gray-900'
+      },
+      {
+        content: (
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-sm text-gray-900">{remark}</span>
+            <svg
+              className={`h-4 w-4 transform text-blue-600 transition-transform ${isActive ? 'rotate-180' : ''}`}
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        ),
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'flex items-center justify-end text-sm text-gray-900 gap-2'
+      }
+    ];
+
+    const rows: TableCell[][] = [baseRow];
+
+    if (isActive) {
+      rows.push([
+        {
+          content: (
+            <div className="text-sm text-gray-700">
+              {schemaDescriptions[id]}
+            </div>
+          ),
+          className: 'bg-gray-50 px-4 py-3 text-gray-700 border-l-2 border-gray-200',
+          colspan: 4
+        }
+      ]);
+    }
+
+    return rows;
+  });
+
+  const factTableRows = factSchemaData.flatMap(({ id, name, grain, measures, source, count }) => {
+    const isActive = schemaDetail === id;
+    const onRowToggle = () => toggleSchemaDetail(id);
+    const baseRow: TableCell[] = [
+      {
+        content: name,
+        className: `font-mono text-xs font-semibold text-gray-900 ${isActive ? 'bg-blue-50' : ''}`,
+        onClick: onRowToggle,
+        buttonClassName: 'flex items-center gap-2 text-xs text-gray-900 uppercase tracking-wide'
+      },
+      {
+        content: grain,
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'text-xs text-gray-900'
+      },
+      {
+        content: measures,
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'text-xs text-gray-900'
+      },
+      {
+        content: source,
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'text-xs text-gray-900'
+      },
+      {
+        content: (
+          <div className="flex items-center justify-end gap-2">
+            <span className="text-xs text-gray-900">{count}</span>
+            <svg
+              className={`h-4 w-4 transform text-blue-600 transition-transform ${isActive ? 'rotate-180' : ''}`}
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        ),
+        className: isActive ? 'bg-blue-50' : undefined,
+        onClick: onRowToggle,
+        buttonClassName: 'flex items-center justify-end text-xs text-gray-900 gap-2'
+      }
+    ];
+
+    const rows: TableCell[][] = [baseRow];
+
+    if (isActive) {
+      rows.push([
+        {
+          content: (
+            <div className="text-sm text-gray-700">
+              {schemaDescriptions[id]}
+            </div>
+          ),
+          className: 'bg-gray-50 px-4 py-3 text-gray-700 border-l-2 border-gray-200',
+          colspan: 5
+        }
+      ]);
+    }
+
+    return rows;
+  });
 
   return (
     <div className="space-y-8">
@@ -148,7 +407,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">데이터가 쓸 수 있도록 만들기</span>
-                      <div className="text-gray-600 text-xs">데이터 정합성</div>
+                      <div className="text-gray-600 text-xs">데이터 정합성 : 신뢰할 수 있는 데이터 적재하기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -157,7 +416,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">데이터 형태 정의하기</span>
-                      <div className="text-gray-600 text-xs">스키마 설계</div>
+                      <div className="text-gray-600 text-xs">스키마 설계 : 고가용성 데이터 형태 만들기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -166,7 +425,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">로그 데이터 살펴보기</span>
-                      <div className="text-gray-600 text-xs">데이터 탐색</div>
+                      <div className="text-gray-600 text-xs">데이터 탐색 : 행동 데이터 찾기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -175,7 +434,7 @@ export default function Project1() {
                     </div>
                     <div className="text-sm">
                       <span className="font-semibold text-gray-900">행동 데이터로 변환하기</span>
-                      <div className="text-gray-600 text-xs">도메인 카디널리티를 줄이기 위한 방법</div>
+                      <div className="text-gray-600 text-xs">URLScheme 카디널리티를 줄이기</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -636,7 +895,7 @@ transformed = transformed.filter(
                 <span className="text-sm text-blue-600 font-medium mr-3">02</span>테이블 스키마
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                차원 테이블과 팩트 테이블 구조 정의
+                디멘젼 테이블과 팩트 테이블 구조 정의
               </p>
             </div>
 
@@ -644,36 +903,11 @@ transformed = transformed.filter(
               <div className="space-y-6">
                 {/* 차원 테이블 */}
                 <div className="mb-6">
-                  <h4 className="font-bold text-blue-600 mb-3">차원 테이블</h4>
+                  <h4 className="font-bold text-blue-600 mb-3">디멘젼 테이블</h4>
                   <div className="bg-gray-200 rounded-lg p-4">
                     <Table
                       headers={['테이블명', '설명', '주요 컬럼', '비고']}
-                      rows={[
-                        [
-                          { content: 'dim_date', className: 'font-mono font-bold text-blue-600' },
-                          '날짜 차원',
-                          'date_key, year, quarter, month',
-                          '2020-2030년'
-                        ],
-                        [
-                          { content: 'dim_merchant', className: 'font-mono font-bold text-blue-600' },
-                          '거래처 정보',
-                          'merchant_key, merchant_name, category',
-                          '926개 거래처'
-                        ],
-                        [
-                          { content: 'dim_bus_stop', className: 'font-mono font-bold text-blue-600' },
-                          '위치/정류장 정보',
-                          'latitude, longitude, geohash, admin_name',
-                          '206,018개 정류장'
-                        ],
-                        [
-                          { content: 'dim_toss_event', className: 'font-mono font-bold text-blue-600' },
-                          '토스 이벤트 분류',
-                          'event_key, event_category, domain',
-                          'URLScheme 분류'
-                        ]
-                      ]}
+                      rows={dimensionTableRows}
                       className="text-sm"
                     />
                   </div>
@@ -685,43 +919,7 @@ transformed = transformed.filter(
                   <div className="bg-gray-200 rounded-lg p-4">
                     <Table
                       headers={['테이블명', '그레인', '주요 측정값', '데이터 원천', '건수']}
-                      rows={[
-                        [
-                          { content: 'fact_app_logs', className: 'font-mono text-xs font-semibold text-blue-700' },
-                          '로그 이벤트 1건',
-                          'event_time, log_level, module_name',
-                          '토스앱 디바이스 로그',
-                          '124,622건'
-                        ],
-                        [
-                          { content: 'fact_transaction', className: 'font-mono text-xs font-semibold text-blue-700' },
-                          '거래 1건',
-                          'amount, merchant_key, txn_type',
-                          '은행/카드 거래내역',
-                          '5,411건'
-                        ],
-                        [
-                          { content: 'fact_movement', className: 'font-mono text-xs font-semibold text-blue-700' },
-                          '시간별 활동 1건',
-                          'steps, active_calories, distance_km',
-                          '아이폰 헬스/운동 데이터',
-                          '107,608건'
-                        ],
-                        [
-                          { content: 'fact_obsidian_notes', className: 'font-mono text-xs font-semibold text-blue-700' },
-                          '노트 작성 1건',
-                          'word_count, wikilinks, tags',
-                          'Obsidian 메타데이터',
-                          '517건'
-                        ],
-                        [
-                          { content: 'fact_photo_metadata', className: 'font-mono text-xs font-semibold text-blue-700' },
-                          '사진 촬영 1건',
-                          'latitude, longitude, creation_time',
-                          '아이폰 사진 EXIF',
-                          '17,515건'
-                        ]
-                      ]}
+                      rows={factTableRows}
                       className="text-sm"
                     />
                   </div>
@@ -748,6 +946,7 @@ transformed = transformed.filter(
                 <div className="space-y-6">
 
             <div className="mb-6">
+              <h4 className="font-bold text-blue-600 mb-3">어떤 로그가 액션을 대변할 수 있을까?</h4>
               <div className="bg-gray-200 rounded-lg shadow-md p-4">
                 <Image
                   src="/applog.png"
@@ -757,23 +956,24 @@ transformed = transformed.filter(
                   className="w-full rounded-lg"
                 />
               </div>
-              <p className="text-sm text-gray-500 text-center mt-2">
+                <p className="text-base text-gray-500 text-center mt-2">
                 시간대별 모듈별 로그 발생 패턴 - 일단위로 균일한 발생 패턴을 보여줍니다.
               </p>
 
               <div className="mt-5 space-y-2">
-                <ol className="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                <ol className="list-decimal list-inside text-base text-gray-700 space-y-1">
                   <li>AppDomainPlugin-com.vivarepublica.cash.notiService</li>
                   <li>AppDomainPlugin-3.com.vivarepublica.cash.WidgetExtension</li>
                   <li>AppDomain-com.vivarepublica.cash / Log</li>
                 </ol>
-                <p className="text-sm text-gray-700">
+                <p className="text-base text-gray-700">
                   토스 애플리케이션의 로그는 notiService,WidgetExtension,Log 총 3개의 폴더에 적재되어 있었습니다. 이 로그들을 하나로 모아 시간축으로 정렬해 패턴을 확인했습니다.
                   위의 그래프는 x축은 날짜 y축은 시간인데, 5개월간 상당히 균등한 패턴을 보여줍니다. 0시부터 6시까지는 발생이 미미했고, 7시,12시,18시에 집중적으로 생성되는 것을 확인 할 수 있습니다.
-                  그러나, 이 로그가 사용자인 나의 <strong>액션으로 부터 발생</strong>했는지 시각적 분포로는 확신하기 어려웠습니다.
+                  그러나, 이 로그가 생활 패턴과 연관이 있어보이지만, 사용자인 나의 <strong>액션으로 부터 발생</strong>했는지 시각적 분포로는 확신하기 어려웠습니다.
                 </p>
               </div>
             </div>
+            <h4 className="font-bold text-blue-600 mb-3">URLScheme 모듈 로그는 앱내 액션을 대변해 줄 수 있는 로그이다.</h4>
             <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4">
               <h4 className="font-bold text-gray-900 mb-3">로그 레벨 및 모듈별 분포</h4>
               <div className="grid grid-cols-2 gap-4">
@@ -859,26 +1059,10 @@ transformed = transformed.filter(
             </div>
 
             <div className="mb-4">
-              <p className="text-gray-700 mb-3">
+              <p className="text-base text-gray-700 mb-3">
                 더 자세히 로그를 들여다보면, 로그가 분명 프론트엔드에서 발생한 데이터라는 것을 알 수 있었습니다. &apos;*.log&apos;날짜와 로그의 날짜가 모두 일치하는 것으로 보아 데이터 발생지점과 적재지점이 같기 때문입니다. 즉, 기기에서 오롯이 생성된 데이터라고 판단할 수 있습니다.
                 여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 캐시 실패의 경우를 로깅하는 데이터였습니다. 
-                
               </p>
-              <div className="mb-4">
-                <div className="bg-gray-200 rounded-lg shadow-md p-4">
-                  <Image
-                    src="/urllog.png"
-                    alt="로그 메시지 발생 분포 - URLScheme 로그 패턴 시각화"
-                    width={800}
-                    height={400}
-                    className="w-full rounded-lg"
-                  />
-                </div>
-                <p className="text-sm text-gray-500 text-center mt-2">
-                  로그 메시지 발생 분포 - URLScheme 이벤트의 시간별 분포 패턴
-                </p>
-              </div>
-
               <div className="mb-3">
                 <Image
                   src="/urllogcode.png"
@@ -888,19 +1072,17 @@ transformed = transformed.filter(
                   className="w-full rounded"
                 />
               </div>
-              <div className="bg-blue-50 p-3 rounded">
-                <p className="text-sm text-gray-700 mb-2">
-                  <strong>URLScheme은 프론트엔드에서 호출하는 딥링크로, 사용자가 버튼을 누르거나 특정 액션을 취했을 때 다음 페이지를 호출합니다. 제 수중의 데이터는 총 2076의 레코드가 있었는데, 1006건의 고유한 값들이 있었습니다.</strong>
-                </p>
-                <ul className="text-sm text-gray-700 space-y-1 mb-3">
-                  <li>• scheme: 5개</li>
-                  <li>• route: 344개</li>
-                  <li>• params: 882개</li>
-                </ul>
-                <div className="text-sm text-gray-700">
-                  <p className="mb-1">또다른 문제는 로그 메세지만 덜렁 가지고 있다보니, 파라미터값이 882개로 카디널리티가 너무커서 분석에 문제가 생김</p>
-                </div>
-              </div>
+              <p className="text-base text-gray-700 mb-3">
+                각 모듈별로 로그의 의미를 살펴보았을때, URLScheme는 확실히 나의 액션으로부터 생성된 데이터였습니다.
+              </p>
+              <p className="text-base text-gray-700 mb-4">
+                URLScheme은 <strong>프론트엔드에서 호출하는 딥링크</strong>인데 버튼이나 액션에 따라 다음 페이지를 열어 줍니다. 
+                이 URLScheme을 domain, route, parameter로 분리하였습니다. scheme은 supertoss,servicetoss등과 같은 식별자이고, route는 어떤 화면을 호출할지 식별할 식별자입니다. params은 세부정보를 담고있는데 필드값의 조합이 상당히 다양했습니다. 
+                예를들어 referrer 같은 필드값은 호출의 출처를 나타내어 사용자 행동 경로나 이벤트 추적에 활용할 수 있을 것으로 판단됩니다.
+              </p>
+              <p>  
+                제가 확보한 URLScheme 로그는 총 2,076건이었고 이 가운데 1,006개의 고유 값이 존재했습니다. 그런데 <strong>scheme 5개, route 344개, params 882개</strong>처럼 카디널리티가 높아 그대로는 분석하기 어려웠기 때문에 이를 분류하는 작업이 필요합니다.
+              </p>
             </div>
 
                 </div>
@@ -914,10 +1096,10 @@ transformed = transformed.filter(
           <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  <span className="text-sm text-blue-600 font-medium mr-3">04</span>도메인 카디널리티를 줄이기 위한 방법
+                  <span className="text-sm text-blue-600 font-medium mr-3">04</span>URLScheme 카디널리티 줄이기
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  344개 Route → 카테고리별 분류
+                  도메인 카디널리티를 줄이기 위해 scheme은 그대로 사용하였고, 애플리케이션 동작과 사용행태를 복기해가면서 분류를 진행했습니다.
                 </p>
               </div>
 
@@ -947,7 +1129,7 @@ transformed = transformed.filter(
 
                   <div className="mb-4">
                     <h4 className="font-bold text-blue-600 mb-3">🏗️ 도메인별 카테고리 구조</h4>
-                    <p className="text-gray-700 text-sm mb-4">
+                    <p className="text-gray-900 text-sm mb-4">
                       scheme 5개, route 344개, params 882개의 높은 카디널리티를 도메인별 카테고리로 분류하여 관리 가능한 수준으로 축소
                     </p>
                   </div>
@@ -956,14 +1138,14 @@ transformed = transformed.filter(
                   <div className="mb-6">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100"
                       onClick={() => toggleSection('supertoss')}
                       aria-expanded={expandedSections.supertoss}
                       aria-controls="supertoss-table"
                     >
                       <span>SUPERTOSS (1,351건 → 7개 카테고리)</span>
                       <svg
-                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.supertoss ? 'rotate-180' : ''}`}
+                        className={`ml-3 h-4 w-4 transform text-blue-600 transition-transform ${expandedSections.supertoss ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -995,14 +1177,14 @@ transformed = transformed.filter(
                   <div className="mb-6">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100"
                       onClick={() => toggleSection('servicetoss')}
                       aria-expanded={expandedSections.servicetoss}
                       aria-controls="servicetoss-table"
                     >
                       <span>SERVICETOSS (570건 → 6개 카테고리)</span>
                       <svg
-                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.servicetoss ? 'rotate-180' : ''}`}
+                        className={`ml-3 h-4 w-4 transform text-blue-600 transition-transform ${expandedSections.servicetoss ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -1033,14 +1215,14 @@ transformed = transformed.filter(
                   <div className="mb-6">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100"
                       onClick={() => toggleSection('securitiestoss')}
                       aria-expanded={expandedSections.securitiestoss}
                       aria-controls="securitiestoss-table"
                     >
                       <span>SECURITIESTOSS (73건 → 3개 카테고리)</span>
                       <svg
-                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.securitiestoss ? 'rotate-180' : ''}`}
+                        className={`ml-3 h-4 w-4 transform text-blue-600 transition-transform ${expandedSections.securitiestoss ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -1068,14 +1250,14 @@ transformed = transformed.filter(
                   <div className="mb-6">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100"
                       onClick={() => toggleSection('banktoss')}
                       aria-expanded={expandedSections.banktoss}
                       aria-controls="banktoss-table"
                     >
                       <span>BANKTOSS (72건 → 3개 카테고리)</span>
                       <svg
-                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.banktoss ? 'rotate-180' : ''}`}
+                        className={`ml-3 h-4 w-4 transform text-blue-600 transition-transform ${expandedSections.banktoss ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -1103,14 +1285,14 @@ transformed = transformed.filter(
                   <div className="mb-6">
                     <button
                       type="button"
-                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-100"
                       onClick={() => toggleSection('intoss')}
                       aria-expanded={expandedSections.intoss}
                       aria-controls="intoss-table"
                     >
                       <span>INTOSS (10건 → 1개 카테고리)</span>
                       <svg
-                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.intoss ? 'rotate-180' : ''}`}
+                        className={`ml-3 h-4 w-4 transform text-blue-600 transition-transform ${expandedSections.intoss ? 'rotate-180' : ''}`}
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
