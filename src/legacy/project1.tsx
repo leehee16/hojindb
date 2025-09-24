@@ -1047,7 +1047,9 @@ transformed = transformed.filter(
                   <span className="text-sm text-blue-600 font-medium mr-3">05</span>세션 구분하기
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  사용자 행동을 의미있는 세션 단위로 구분하여 분석을 진행했습니다.
+                  세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다.
+                  또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다.
+                  따라서 아래의 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
                 </p>
               </div>
 
@@ -1063,7 +1065,7 @@ transformed = transformed.filter(
                     />
                   </div>
                   <p className="text-sm text-gray-500 text-center mt-2">
-                    세션 간격 분포와 누적 분포 - 사용자 행동 패턴 분석을 위한 세션 정의
+                    세션 간격 분포와 누적 분포 - 세션 정의
                   </p>
                 </div>
 
@@ -1071,8 +1073,7 @@ transformed = transformed.filter(
                   <div className="space-y-3">
                     <h4 className="font-bold text-blue-600">세션 정의 방법론</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
-                      URLScheme 이벤트 간의 시간 간격을 분석하여 의미있는 세션을 구분했습니다.
-                      10분(600초) 기준으로 세션을 나누어 자연스러운 사용자 행동 단위를 정의했습니다.
+                      10분 이상 미사용 시 새로운 세션으로 구분하고, 최대 20분까지만 이어지도록 하여 자연스러운 사용자 행동 단위로 정의했습니다.
                     </p>
                   </div>
 
@@ -1084,7 +1085,7 @@ transformed = transformed.filter(
     event_time,
     CASE
       WHEN LAG(event_time) OVER (ORDER BY event_time) IS NULL THEN 1
-      -- 10분(600초) 기준으로 변경 - 그래프에서 자연스러운 분리점
+      -- 10분 기준으로 변경
       WHEN EXTRACT(EPOCH FROM (event_time - LAG(event_time) OVER (ORDER BY event_time))) >= 600 THEN 1
       ELSE 0
     END AS new_session_flag
@@ -1103,7 +1104,7 @@ session_windows AS (
   SELECT
     session_id,
     session_start,
-    -- 세션 윈도우를 20분으로 설정 (10분 기준 + 여유분)
+    -- 세션 윈도우를 20분으로 설정
     session_start + INTERVAL '20 minutes' AS session_end
   FROM urlscheme_with_session_id
 ),
