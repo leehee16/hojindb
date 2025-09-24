@@ -135,7 +135,7 @@ export default function PortfolioPage() {
                     <span className="text-lg tossface">2️⃣</span>
                     <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">표준 산업 분류 검색 시스템</h4>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-3">산업에서 기업·제품으로 이어지는 다단계 매핑과 탐색 구조 구축</p>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">산업에서 기업·제품으로 이어지는 매핑과 탐색 구조, UI 설계</p>
                   <div className="flex flex-wrap gap-2">
                     <img 
                       src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" 

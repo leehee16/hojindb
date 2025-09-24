@@ -463,6 +463,16 @@ export default function Project1() {
 
         <section className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">프로젝트 개요</h2>
+          <div className="mb-4">
+            <Image
+              src="/archi.png"
+              alt="데이터 레이크하우스 아키텍처 다이어그램"
+              width={1584}
+              height={492}
+              className="w-full rounded-lg border border-gray-200 shadow-sm"
+              priority
+            />
+          </div>
           <div className="bg-gray-50 p-6 rounded-lg">
             <p className="text-gray-700 leading-relaxed mb-4">
               토스는 서비스 전반에서 방대한 데이터를 생성합니다.
@@ -561,160 +571,6 @@ export default function Project1() {
               <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs mx-1">OpenLineage</span>로 리니지 기록, 
               <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs mx-1">DuckDB</span>/<span className="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs mx-1">Spark</span>로 쿼리
             </p>
-          </div>
-        </section>
-
-        <section className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">아키텍처</h2>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="grid grid-cols-2 gap-8">
-              {/* 왼쪽: 데이터 레이크 구조 */}
-              <div>
-                <div className="mb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <span className="text-xl mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>📁</span>
-                      <span className="font-bold text-lg text-gray-800">lake/</span>
-                    </div>
-                    <div className="text-xs text-gray-500">41,359 files</div>
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  {/* Bronze Layer */}
-                  <div className="flex items-center justify-between py-1 px-2">
-                    <div className="flex items-center">
-                      <span className="text-lg mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥉</span>
-                      <div>
-                        <div className="font-semibold text-gray-800">bronze/</div>
-                        <div className="text-xs text-gray-600">Raw data ingestion</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">40,910</div>
-                      <div className="text-xs text-gray-500">files</div>
-                    </div>
-                  </div>
-
-                  {/* Silver Layer */}
-                  <div className="flex items-center justify-between py-1 px-2">
-                    <div className="flex items-center">
-                      <span className="text-lg mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥈</span>
-                      <div>
-                        <div className="font-semibold text-gray-800">silver/</div>
-                        <div className="text-xs text-gray-600">Cleaned & transformed</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">447</div>
-                      <div className="text-xs text-gray-500">files</div>
-                    </div>
-                  </div>
-
-                  {/* Gold Layer */}
-                  <div className="flex items-center justify-between py-1 px-2">
-                    <div className="flex items-center">
-                      <span className="text-lg mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥇</span>
-                      <div>
-                        <div className="font-semibold text-gray-800">gold/</div>
-                        <div className="text-xs text-gray-600">Analytics-ready data</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">16</div>
-                      <div className="text-xs text-gray-500">files</div>
-                    </div>
-                  </div>
-
-                  {/* Lineage */}
-                  <div className="flex items-center justify-between py-1 px-2">
-                    <div className="flex items-center">
-                      <span className="text-lg mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>📋</span>
-                      <div>
-                        <div className="font-semibold text-gray-800">lineage/</div>
-                        <div className="text-xs text-gray-600">Data lineage tracking</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">19</div>
-                      <div className="text-xs text-gray-500">files</div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              
-              {/* 오른쪽: 아키텍처 컴포넌트 */}
-              <div>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">메달리온 아키텍처</h4>
-                    <p className="text-gray-700 text-sm">파일기반 데이터 저장</p>
-                    <p className="text-gray-600 text-xs">Bronze(csv, sqlite, xml) → Silver(parquet) → Gold(parquet, csv)</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">데이터 리니지 추적</h4>
-                    <p className="text-gray-700 text-sm">OpenLineage를 통한 변환 추적</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">스키마 진화</h4>
-                    <p className="text-gray-700 text-sm">Iceberg - 스키마 변경 이력 관리</p>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900 mb-2">일자별 파티셔닝</h4>
-                    <p className="text-gray-700 text-sm">transaction_id 멱등성키, date기준 파티셔닝</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* 메달리온 아키텍처 흐름 - 전체 너비 */}
-            <div className="mt-4 pt-3 border-t border-gray-300">
-              <div className="flex items-center justify-center space-x-8">
-                {/* Bronze */}
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="text-2xl mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥉</span>
-                    <span className="font-bold text-lg text-gray-800">Bronze</span>
-                  </div>
-                  <div className="text-xs text-gray-600 max-w-32">
-                    스마트폰 앱 로그, 사진 메타데이터, 헬스데이터 원본 등
-                  </div>
-                </div>
-
-                {/* Arrow */}
-                <div className="flex items-center">
-                  <span className="text-xl text-gray-400">→</span>
-                </div>
-
-                {/* Silver */}
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="text-2xl mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥈</span>
-                    <span className="font-bold text-lg text-gray-800">Silver</span>
-                  </div>
-                  <div className="text-xs text-gray-600 max-w-32">
-                    Parquet로 가공한 팩트테이블들
-                  </div>
-                </div>
-
-                {/* Arrow */}
-                <div className="flex items-center">
-                  <span className="text-xl text-gray-400">→</span>
-                </div>
-
-                {/* Gold */}
-                <div className="text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="text-2xl mr-2" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🥇</span>
-                    <span className="font-bold text-lg text-gray-800">Gold</span>
-                  </div>
-                  <div className="text-xs text-gray-600 max-w-32">
-                    시각화용 CSV, DuckDB 집계 테이블
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </div>
@@ -1096,10 +952,11 @@ transformed = transformed.filter(
           <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  <span className="text-sm text-blue-600 font-medium mr-3">04</span>URLScheme 카디널리티 줄이기
+                  <span className="text-sm text-blue-600 font-medium mr-3">04</span>행동 데이터로 변환하기
+
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  도메인 카디널리티를 줄이기 위해 scheme은 그대로 사용하였고, 애플리케이션 동작과 사용행태를 복기해가면서 분류를 진행했습니다.
+                  데이터의 카디널리티를 줄이기 위해 scheme은 그대로 사용하였고, 애플리케이션 동작과 사용행태를 복기해가면서 분류를 진행했습니다.
                 </p>
               </div>
 
@@ -1122,7 +979,6 @@ transformed = transformed.filter(
                         <li>• <strong>Route 344개 → 카테고리 20개</strong>로 약 94% 축소</li>
                         <li>• 도메인별 특성을 반영한 의미 있는 분류 체계 구축</li>
                         <li>• 분석과 시각화가 가능한 카디널리티 확보</li>
-                        <li>• 향후 신규 route 추가 시 기존 카테고리에 매핑 가능한 확장성 확보</li>
                       </ul>
                     </div>
                   </div>
@@ -1459,26 +1315,6 @@ ORDER BY session_start;`}
                     </p>
                     <p className="text-gray-600 text-sm leading-relaxed">
                       따라서, <strong>데이터의 양과 원천을 반영할 수 있는 구조</strong>가 필요합니다.
-                    </p>
-                  </div>
-
-                  <div className="mb-6">
-                    <h4 className="font-bold text-blue-600 mb-3">앱 내부 패턴 → 거래 전환 분석</h4>
-                    <div className="bg-gray-200 rounded-lg p-4">
-                      <Table
-                        headers={['이벤트 명', '이벤트', '평균 전환 시간', '중간값 전환 시간', '총 전환 수']}
-                        rows={[
-                          ['소비 내역 조회', 'supertoss|home|/consumption', '25.0분', '5.2분', '30회'],
-                          ['은행탭 계좌', 'supertoss|banktab|/account', '25.5분', '7.6분', '93회'],
-                          ['소비 내역 상세', 'supertoss|home|/consumption/transaction/detail', '26.3분', '7.3분', '59회'],
-                          ['계좌 상세 진입', 'supertoss|home|/dst/account', '29.2분', '11.8분', '62회'],
-                          ['투자 포트폴리오 조회', 'supertoss|home|/investment-portfolio', '31.4분', '15.7분', '86회']
-                        ]}
-                        className="text-xs"
-                      />
-                    </div>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      ㅇㅇ
                     </p>
                   </div>
                 </div>
