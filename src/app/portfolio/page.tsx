@@ -107,7 +107,7 @@ export default function PortfolioPage() {
                       alt="Pandas"
                       width={132}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -115,7 +115,7 @@ export default function PortfolioPage() {
                       alt="SQL"
                       width={110}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -123,7 +123,7 @@ export default function PortfolioPage() {
                       alt="Apache Iceberg"
                       width={190}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                   </div>
@@ -154,7 +154,7 @@ export default function PortfolioPage() {
                       alt="FastAPI"
                       width={140}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -162,7 +162,7 @@ export default function PortfolioPage() {
                       alt="Next.js"
                       width={130}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -170,7 +170,7 @@ export default function PortfolioPage() {
                       alt="Docker"
                       width={140}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                   </div>
@@ -201,7 +201,7 @@ export default function PortfolioPage() {
                       alt="Pandas"
                       width={132}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -209,7 +209,7 @@ export default function PortfolioPage() {
                       alt="GCP"
                       width={120}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -217,7 +217,7 @@ export default function PortfolioPage() {
                       alt="OpenRouter"
                       width={160}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                   </div>
@@ -248,7 +248,7 @@ export default function PortfolioPage() {
                       alt="Pandas"
                       width={132}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -256,7 +256,7 @@ export default function PortfolioPage() {
                       alt="PyTorch"
                       width={140}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                     <Image 
@@ -264,7 +264,7 @@ export default function PortfolioPage() {
                       alt="SciPy"
                       width={132}
                       height={32}
-                      className="h-6 rounded-lg opacity-70"
+                      className="h-6 w-auto max-w-[120px] rounded-lg opacity-70"
                       unoptimized
                     />
                   </div>
