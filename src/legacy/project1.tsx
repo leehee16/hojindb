@@ -1296,10 +1296,62 @@ ORDER BY session_start;`}
                       <Table
                         headers={['순위', '요인', '최대 증가율', '상관계수', '임계값']}
                         rows={[
-                          ['1', '🏃 Movement', '+359.7%', '0.571', '10,000보+'],
-                          ['2', '📸 Photo', '+326.9%', '0.436', '4-10장'],
-                          ['3', '💰 Transaction', '+393.6%', '0.465', '2-3건 큰 거래액'],
-                          ['4', '📝 Notes', '+271.0%', '-', 'Daily 노트']
+                          [
+                            '1',
+                            {
+                              content: (
+                                <span className="inline-flex items-center gap-2 text-gray-900">
+                                  <span className="tossface" aria-hidden>🏃</span>
+                                  <span>Movement</span>
+                                </span>
+                              )
+                            },
+                            '+359.7%',
+                            '0.571',
+                            '10,000보+'
+                          ],
+                          [
+                            '2',
+                            {
+                              content: (
+                                <span className="inline-flex items-center gap-2 text-gray-900">
+                                  <span className="tossface" aria-hidden>📸</span>
+                                  <span>Photo</span>
+                                </span>
+                              )
+                            },
+                            '+326.9%',
+                            '0.436',
+                            '4-10장'
+                          ],
+                          [
+                            '3',
+                            {
+                              content: (
+                                <span className="inline-flex items-center gap-2 text-gray-900">
+                                  <span className="tossface" aria-hidden>💰</span>
+                                  <span>Transaction</span>
+                                </span>
+                              )
+                            },
+                            '+393.6%',
+                            '0.465',
+                            '2-3건 큰 거래액'
+                          ],
+                          [
+                            '4',
+                            {
+                              content: (
+                                <span className="inline-flex items-center gap-2 text-gray-900">
+                                  <span className="tossface" aria-hidden>📝</span>
+                                  <span>Notes</span>
+                                </span>
+                              )
+                            },
+                            '+271.0%',
+                            '-',
+                            'Daily 노트'
+                          ]
                         ]}
                         className="text-sm"
                       />
