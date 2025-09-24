@@ -1,9 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import CodeToggle from '@/components/CodeToggle';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 // Table 컴포넌트 인라인 정의
 interface TableProps {
@@ -63,6 +62,21 @@ function Table({ headers, rows, className = "" }: TableProps) {
 
 
 export default function Project1() {
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
+    supertoss: true,
+    servicetoss: true,
+    securitiestoss: true,
+    banktoss: true,
+    intoss: true
+  });
+
+  const toggleSection = (key: keyof typeof expandedSections) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
   return (
     <div className="space-y-8">
       {/* Page 2: Project 1 - Page 1 */}
@@ -853,32 +867,13 @@ transformed = transformed.filter(
               </div>
 
               <div className="mb-3">
-                <SyntaxHighlighter
-                  language="text"
-                  style={vscDarkPlus}
-                  className="rounded text-xs"
-                  customStyle={{
-                    margin: 0,
-                    padding: '0.75rem',
-                    fontSize: '0.75rem',
-                    lineHeight: '1.5',
-                    backgroundColor: '#1e1e1e'
-                  }}
-                  wrapLines={true}
-                  lineProps={(lineNumber) => ({
-                    style: {
-                      color: lineNumber % 2 === 1 ? '#ffd700' : '#87ceeb'
-                    }
-                  })}
-                >
-{`[2024-03-15 10:30:15.123] Execute scheme: banktoss://account-mmda/onboard?step=verification&userId=12345&timestamp=2024-03-15T10:30:00Z&sessionId=sess_98765
-[2024-03-15 10:30:16.045] Execute scheme: supertoss://home/dst/account?referrer=main&category=savings&productId=prod_789&userId=12345&auth_token=tk_abc123
-[2024-03-15 10:30:17.167] Execute scheme: supertoss://home/account?_auth_required=true&redirect_uri=dashboard&scope=read_profile&client_id=mobile_app_v2
-[2024-03-15 10:30:18.234] Execute scheme: supertoss://home/dst/point?referrer=rewards&action=redeem&pointValue=500&userId=12345&campaignId=spring2024
-[2024-03-15 10:30:19.456] Execute scheme: servicetoss://mobility?type=ELECTRIC_SCOOTER&location=gangnam&pickup_time=2024-03-15T11:00:00Z&userId=12345
-[2024-03-15 10:30:20.789] Execute scheme: banktoss://transfer/send?amount=50000&recipient_account=1234567890&memo=카페비용&currency=KRW&userId=12345
-[2024-03-15 10:30:21.912] Execute scheme: supertoss://investment/stocks?symbol=TSLA&action=buy&quantity=5&orderType=market&userId=12345&portfolioId=port_456`}
-                </SyntaxHighlighter>
+                <Image
+                  src="/urllogcode.png"
+                  alt="딥링크 URL scheme 로그 코드 스니펫"
+                  width={1562}
+                  height={420}
+                  className="w-full rounded"
+                />
               </div>
               <div className="bg-blue-50 p-3 rounded">
                 <p className="text-sm text-gray-700 mb-2">
@@ -895,34 +890,6 @@ transformed = transformed.filter(
               </div>
             </div>
 
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-800 mb-2">이벤트 정의</h4>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white p-3 rounded border">
-                  <h5 className="font-semibold text-blue-600 mb-2">도메인별 분포</h5>
-                  <ul className="text-sm space-y-1">
-                    <li><strong>supertoss</strong>: 1,351개 (65%) - 메인 앱</li>
-                    <li><strong>servicetoss</strong>: 570개 (27%) - 부가 서비스</li>
-                    <li><strong>securitiestoss</strong>: 73개 (4%) - ??</li>
-                    <li><strong>banktoss</strong>: 72개 (3%) - 은행 특화</li>
-                    <li><strong>intoss</strong>: 10개 (0.5%) - 내부 기능</li>
-                  </ul>
-                </div>
-                <div className="bg-white p-3 rounded border">
-                  <h5 className="font-semibold text-green-600 mb-2">분석 결과</h5>
-                  <div className="text-sm text-gray-700">
-                    <p className="mb-2">
-                      이게 iOS 디바이스에서 생성되었고, 총 3개의 도메인에서 수집되었으며,
-                      두 도메인의 데이터는 똑같았고, 로그파일과 실제 이벤트 발생 일자가 일치하는걸 봐서
-                      디바이스에서만 생성된 데이터라는점.
-                    </p>
-                    <p className="font-semibold text-orange-600">
-                      그런데 이게 내가 항상 액션할때만 생성되는건지에 대한 의문이 있었다.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
                 </div>
               </div>
             </div>
@@ -937,12 +904,34 @@ transformed = transformed.filter(
                   <span className="text-sm text-blue-600 font-medium mr-3">04</span>도메인 카디널리티를 줄이기 위한 방법
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  344개 Route → 카테고리별 분류 체계 구축
+                  344개 Route → 카테고리별 분류
                 </p>
               </div>
 
               <div className="p-6">
                 <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-white p-3 rounded border">
+                      <h5 className="font-semibold text-blue-600 mb-2">도메인별 분포</h5>
+                      <ul className="text-sm space-y-1">
+                        <li><strong>supertoss</strong>: 1,351개 (65%) - 메인 앱</li>
+                        <li><strong>servicetoss</strong>: 570개 (27%) - 부가 서비스</li>
+                        <li><strong>securitiestoss</strong>: 73개 (4%) - 증권</li>
+                        <li><strong>banktoss</strong>: 72개 (3%) - 은행 특화</li>
+                        <li><strong>intoss</strong>: 10개 (0.5%) - 내부 기능</li>
+                      </ul>
+                    </div>
+                    <div className="bg-white p-3 rounded border">
+                      <h5 className="font-semibold text-green-600 mb-2">분류 결과</h5>
+                      <ul className="text-sm text-gray-700 space-y-1">
+                        <li>• <strong>Route 344개 → 카테고리 20개</strong>로 약 94% 축소</li>
+                        <li>• 도메인별 특성을 반영한 의미 있는 분류 체계 구축</li>
+                        <li>• 분석과 시각화가 가능한 카디널리티 확보</li>
+                        <li>• 향후 신규 route 추가 시 기존 카테고리에 매핑 가능한 확장성 확보</li>
+                      </ul>
+                    </div>
+                  </div>
+
                   <div className="mb-4">
                     <h4 className="font-bold text-blue-600 mb-3">🏗️ 도메인별 카테고리 구조</h4>
                     <p className="text-gray-700 text-sm mb-4">
@@ -952,87 +941,182 @@ transformed = transformed.filter(
 
                   {/* SUPERTOSS */}
                   <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 mb-3">SUPERTOSS (1,351건 → 7개 카테고리)</h5>
-                    <Table
-                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
-                      rows={[
-                        ['supertoss_credit', '258', '19.1%', '1개', '신용 서비스 (/lab 중심)'],
-                        ['supertoss_account', '262', '19.4%', '8개', '계좌 관리 전반'],
-                        ['supertoss_payment', '192', '14.2%', '11개', '소비/송금/결제'],
-                        ['supertoss_investment', '164', '12.1%', '2개', '투자 포트폴리오'],
-                        ['supertoss_home', '133', '9.8%', '8개', '메인 화면/홈'],
-                        ['supertoss_info', '120', '8.9%', '7개', '내역/상세/검색'],
-                        ['supertoss_other', '222', '16.4%', '60개', '기타 모든 기능']
-                      ]}
-                      className="text-xs"
-                    />
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      onClick={() => toggleSection('supertoss')}
+                      aria-expanded={expandedSections.supertoss}
+                      aria-controls="supertoss-table"
+                    >
+                      <span>SUPERTOSS (1,351건 → 7개 카테고리)</span>
+                      <svg
+                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.supertoss ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {expandedSections.supertoss && (
+                      <div id="supertoss-table" className="mt-3">
+                        <Table
+                          headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                          rows={[
+                            ['supertoss_credit', '258', '19.1%', '1개', '신용 서비스 (/lab 중심)'],
+                            ['supertoss_account', '262', '19.4%', '8개', '계좌 관리 전반'],
+                            ['supertoss_payment', '192', '14.2%', '11개', '소비/송금/결제'],
+                            ['supertoss_investment', '164', '12.1%', '2개', '투자 포트폴리오'],
+                            ['supertoss_home', '133', '9.8%', '8개', '메인 화면/홈'],
+                            ['supertoss_info', '120', '8.9%', '7개', '내역/상세/검색'],
+                            ['supertoss_other', '222', '16.4%', '60개', '기타 모든 기능']
+                          ]}
+                          className="text-xs"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* SERVICETOSS */}
                   <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 mb-3">SERVICETOSS (570건 → 6개 카테고리)</h5>
-                    <Table
-                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
-                      rows={[
-                        ['servicetoss_other', '317', '55.6%', '137개', '분류되지 않은 다양한 서비스'],
-                        ['servicetoss_rewards', '100', '17.5%', '20개', '포인트/이벤트/래플'],
-                        ['servicetoss_mobility', '65', '11.4%', '5개', '교통/모빌리티 서비스'],
-                        ['servicetoss_government', '38', '6.7%', '12개', '세금/정부 서비스'],
-                        ['servicetoss_housing', '28', '4.9%', '8개', '부동산/청약'],
-                        ['servicetoss_commerce', '22', '3.9%', '7개', '쇼핑/공동구매']
-                      ]}
-                      className="text-xs"
-                    />
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      onClick={() => toggleSection('servicetoss')}
+                      aria-expanded={expandedSections.servicetoss}
+                      aria-controls="servicetoss-table"
+                    >
+                      <span>SERVICETOSS (570건 → 6개 카테고리)</span>
+                      <svg
+                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.servicetoss ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {expandedSections.servicetoss && (
+                      <div id="servicetoss-table" className="mt-3">
+                        <Table
+                          headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                          rows={[
+                            ['servicetoss_other', '317', '55.6%', '137개', '분류되지 않은 다양한 서비스'],
+                            ['servicetoss_rewards', '100', '17.5%', '20개', '포인트/이벤트/래플'],
+                            ['servicetoss_mobility', '65', '11.4%', '5개', '교통/모빌리티 서비스'],
+                            ['servicetoss_government', '38', '6.7%', '12개', '세금/정부 서비스'],
+                            ['servicetoss_housing', '28', '4.9%', '8개', '부동산/청약'],
+                            ['servicetoss_commerce', '22', '3.9%', '7개', '쇼핑/공동구매']
+                          ]}
+                          className="text-xs"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* SECURITIESTOSS */}
                   <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 mb-3">SECURITIESTOSS (73건 → 3개 카테고리)</h5>
-                    <Table
-                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
-                      rows={[
-                        ['securitiestoss_stocks', '56', '76.7%', '30개', '개별 종목 (US, AMX, NAS 등)'],
-                        ['securitiestoss_info', '14', '19.2%', '6개', '투자 정보/이벤트'],
-                        ['securitiestoss_other', '3', '4.1%', '2개', '기타 기능']
-                      ]}
-                      className="text-xs"
-                    />
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      onClick={() => toggleSection('securitiestoss')}
+                      aria-expanded={expandedSections.securitiestoss}
+                      aria-controls="securitiestoss-table"
+                    >
+                      <span>SECURITIESTOSS (73건 → 3개 카테고리)</span>
+                      <svg
+                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.securitiestoss ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {expandedSections.securitiestoss && (
+                      <div id="securitiestoss-table" className="mt-3">
+                        <Table
+                          headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                          rows={[
+                            ['securitiestoss_stocks', '56', '76.7%', '30개', '개별 종목 (US, AMX, NAS 등)'],
+                            ['securitiestoss_info', '14', '19.2%', '6개', '투자 정보/이벤트'],
+                            ['securitiestoss_other', '3', '4.1%', '2개', '기타 기능']
+                          ]}
+                          className="text-xs"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* BANKTOSS */}
                   <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 mb-3">BANKTOSS (72건 → 3개 카테고리)</h5>
-                    <Table
-                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
-                      rows={[
-                        ['banktoss_detail', '34', '47.2%', '8개', '상세 정보/거래 내역'],
-                        ['banktoss_other', '32', '44.4%', '14개', '기타 은행 서비스'],
-                        ['banktoss_home', '6', '8.3%', '2개', '홈 화면']
-                      ]}
-                      className="text-xs"
-                    />
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      onClick={() => toggleSection('banktoss')}
+                      aria-expanded={expandedSections.banktoss}
+                      aria-controls="banktoss-table"
+                    >
+                      <span>BANKTOSS (72건 → 3개 카테고리)</span>
+                      <svg
+                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.banktoss ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {expandedSections.banktoss && (
+                      <div id="banktoss-table" className="mt-3">
+                        <Table
+                          headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                          rows={[
+                            ['banktoss_detail', '34', '47.2%', '8개', '상세 정보/거래 내역'],
+                            ['banktoss_other', '32', '44.4%', '14개', '기타 은행 서비스'],
+                            ['banktoss_home', '6', '8.3%', '2개', '홈 화면']
+                          ]}
+                          className="text-xs"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* INTOSS */}
                   <div className="mb-6">
-                    <h5 className="font-semibold text-gray-800 mb-3">INTOSS (10건 → 1개 카테고리)</h5>
-                    <Table
-                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
-                      rows={[
-                        ['intoss_games', '10', '100%', '8개', '내부 게임들']
-                      ]}
-                      className="text-xs"
-                    />
-                  </div>
-
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-bold text-gray-900 mb-2">카테고리화 결과</h4>
-                    <div className="text-sm text-gray-700 space-y-2">
-                      <p>• <strong>Route 344개 → 카테고리 20개</strong>로 약 94% 차원 축소 달성</p>
-                      <p>• 도메인별 특성을 반영한 의미 있는 분류 체계 구축</p>
-                      <p>• 분석 및 시각화가 가능한 수준의 카디널리티 확보</p>
-                      <p>• 향후 새로운 route 추가 시 기존 카테고리에 매핑 가능한 확장성 확보</p>
-                    </div>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded border border-gray-200 bg-gray-50 px-4 py-2 text-left text-sm font-semibold text-gray-800 transition-colors hover:bg-gray-100"
+                      onClick={() => toggleSection('intoss')}
+                      aria-expanded={expandedSections.intoss}
+                      aria-controls="intoss-table"
+                    >
+                      <span>INTOSS (10건 → 1개 카테고리)</span>
+                      <svg
+                        className={`ml-3 h-4 w-4 transform transition-transform ${expandedSections.intoss ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    {expandedSections.intoss && (
+                      <div id="intoss-table" className="mt-3">
+                        <Table
+                          headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                          rows={[
+                            ['intoss_games', '10', '100%', '8개', '내부 게임들']
+                          ]}
+                          className="text-xs"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1047,9 +1131,7 @@ transformed = transformed.filter(
                   <span className="text-sm text-blue-600 font-medium mr-3">05</span>세션 구분하기
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다.
-                  또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다.
-                  따라서 아래의 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
+                  10분 기준 사용자 세션 정의
                 </p>
               </div>
 
@@ -1071,7 +1153,7 @@ transformed = transformed.filter(
 
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">세션 정의 방법론</h4>
+                    <h4 className="font-bold text-blue-600">세션 정의</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
                       10분 이상 미사용 시 새로운 세션으로 구분하고, 최대 20분까지만 이어지도록 하여 자연스러운 사용자 행동 단위로 정의했습니다.
                     </p>
@@ -1135,19 +1217,9 @@ GROUP BY session_id, session_start, session_end
 ORDER BY session_start;`}
                   >
                     <p className="text-gray-700 text-sm">
-                      세션을 정의하기 위해 시간 간격 기반으로 그룹핑하는 SQL입니다.
-                      10분(600초) 기준으로 세션을 나누어 자연스러운 사용자 행동 단위를 정의했습니다.
+                      세션 구분 기준을 30분 미사용 시점으로 설정하다 보니, 실제로는 10시간이 하나의 세션으로 잡히는 문제가 발생했습니다. 또한 실제 사용 행태를 생각해보면, 10분 이상 연속으로 사용하지 않는 경우가 대부분인 것으로 보입니다. 따라서 아래의 그래프처럼 이벤트 로그간 시간delta를 조사해, 유의미하게 꺾이는 구간을 발견하여 세션 구분 값으로 사용했습니다.
                     </p>
                   </CodeToggle>
-
-                  <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">세션 윈도우 최적화</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      세션 윈도우를 20분으로 설정하여 연속적인 사용자 액션을 하나의 의도로 그룹화했습니다.
-                      이를 통해 단순한 이벤트 로그에서 <strong>사용자 여정과 의도를 파악할 수 있는 구조</strong>로 변환했습니다.
-                    </p>
-                  </div>
-
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="font-bold text-gray-900 mb-2">세션 분석 결과</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
@@ -1175,14 +1247,14 @@ ORDER BY session_start;`}
               <div className="p-6">
                 <div className="space-y-6">
                   <div className="mb-6">
-                    <h4 className="font-bold text-blue-600 mb-3">🔥 세션 증가 요인 TOP 4</h4>
+                    <h4 className="font-bold text-blue-600 mb-3">세션 증가 요인 TOP 4</h4>
                     <div className="bg-gray-200 rounded-lg p-4">
                       <Table
                         headers={['순위', '요인', '최대 증가율', '상관계수', '핵심 임계값']}
                         rows={[
-                          ['1', '🏃 Movement', '+3,597.7%', '0.471', '10,000보+'],
+                          ['1', '🏃 Movement', '+359.7%', '0.471', '10,000보+'],
                           ['2', '📸 Photo', '+326.9%', '0.436', '4-10장'],
-                          ['3', '💰 Transaction', '+393.6%', '0.465', '2-3건 중대액'],
+                          ['3', '💰 Transaction', '+393.6%', '0.465', '2-3건 큰 거래액'],
                           ['4', '📝 Notes', '+271.0%', '-', 'Daily 노트']
                         ]}
                         className="text-sm"
