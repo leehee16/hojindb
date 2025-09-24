@@ -1,3 +1,10 @@
+'use client';
+
+import Image from 'next/image';
+import CodeToggle from '@/components/CodeToggle';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 // Table 컴포넌트 인라인 정의
 interface TableProps {
   headers: string[];
@@ -71,6 +78,105 @@ export default function Project1() {
             </div>
           </div>
         </header>
+
+        <section className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">요약</h2>
+          <div className="bg-gradient-to-r from-gray-100 to-gray-100 p-6 rounded-lg mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* 왼쪽: 프로젝트 요약 */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>🏗️</span>
+                  개인 데이터 레이크하우스 구축
+                </h3>
+                <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                  토스앱 로그, 금융 거래내역, 사진 메타데이터, 운동 기록 등 일상 속 파편화된 데이터를 통합하여 
+                  <strong> 의미있는 인사이트</strong>로 전환하는 데이터 레이크하우스를 설계했습니다.
+                </p>
+                <div className="bg-white/70 p-3 rounded-lg">
+                  <div className="grid grid-cols-3 gap-3 text-center text-xs">
+                    <div>
+                      <div className="font-bold text-blue-600">124K+</div>
+                      <div className="text-gray-600">앱 로그</div>
+                    </div>
+                    <div>
+                      <div className="font-bold text-green-600">5.4K</div>
+                      <div className="text-gray-600">거래 내역</div>
+                    </div>
+                    <div>
+                      <div className="font-bold text-orange-600">17.5K</div>
+                      <div className="text-gray-600">사진 메타</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 오른쪽: 분석 흐름 */}
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>📊</span>
+                  프로젝트 여정
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>1️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">데이터 정합성</span>
+                      <div className="text-gray-600 text-xs">리니지 추적, 품질 관리, Iceberg 적재</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>2️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">스키마 설계</span>
+                      <div className="text-gray-600 text-xs">차원/팩트 테이블 구조 정의</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>3️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">데이터 탐색</span>
+                      <div className="text-gray-600 text-xs">로그 구조 분석, URLScheme 발견</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>4️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">행동 데이터로 변환하기</span>
+                      <div className="text-gray-600 text-xs">URLScheme로그를 기능단위로 분류하여 카디널리티 줄이기</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>5️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">세션 정의</span>
+                      <div className="text-gray-600 text-xs">10분 기준 사용자 행동 시퀀스 구분</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 flex items-center justify-center text-lg">
+                      <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>6️⃣</span>
+                    </div>
+                    <div className="text-sm">
+                      <span className="font-semibold text-gray-900">핵심 인사이트</span>
+                      <div className="text-gray-600 text-xs">운동량 임계값, 거래 전환 패턴 발견</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">프로젝트 개요</h2>
@@ -333,9 +439,9 @@ export default function Project1() {
 
       {/* Page 3: Project 1 - Page 2 */}
       <div className="content-container py-8">
-        <section className="mb-12">
+        <section className="mb-8">
           {/* 데이터 정합성 */}
-          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden mb-4">
             <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-1">
                 <span className="text-sm text-blue-600 font-medium mr-3">01</span>데이터 정합성
@@ -347,55 +453,161 @@ export default function Project1() {
 
             <div className="p-6">
               <div className="space-y-3">
-              <div>
-                <h4 className="font-semibold text-gray-800">1. 데이터 리니지 추적</h4>
-                <p className="text-sm text-gray-700 mb-3">
+              <CodeToggle
+                title="1. 데이터 리니지 추적"
+                code={`# OpenLineage 클라이언트 with File Transport
+file_config = FileConfig(
+    log_file_path=str(lineage_dir / "etl_jobs" / "toss_logs_lineage.json"),
+    append=True
+)
+self.client = OpenLineageClient(transport=FileTransport(file_config))
+
+# Job 시작 이벤트
+event = RunEvent(
+    eventType=RunState.START,
+    eventTime=self.start_time.isoformat(),
+    run=run,
+    job=job,
+    inputs=[],
+    outputs=[],
+    producer="dade-etl-toss-logs"
+)
+self.client.emit(event)
+
+# Job 완료 이벤트 (입출력 데이터셋, 스키마 포함)
+event = RunEvent(
+    eventType=RunState.COMPLETE,
+    eventTime=end_time.isoformat(),
+    run=run,
+    job=job,
+    inputs=input_datasets,
+    outputs=output_datasets,
+    producer="dade-etl-toss-logs"
+)
+self.client.emit(event)`}
+              >
+                <p>
                   OpenLineage와 Spark Listener를 활용하여 ETL 수행 이력과 데이터 흐름을 자동으로 기록하였습니다.<br/>
                   입력 및 출력 데이터셋의 스키마, 소스 URI, 레코드 수를 메타데이터를 저장하여, 추적가능하도록 구성했습니다.
                 </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">2. 데이터 품질 및 정합성 관리</h4>
-                <p className="text-sm text-gray-700 mb-3">
+              </CodeToggle>
+              <CodeToggle
+                title="2. 데이터 품질 및 정합성 관리"
+                code={`# event_id, log_id 생성 (멱등성, 고유성 보장)
+F.sha2(
+    F.concat_ws("|", F.col("timestamp"), F.col("level"),
+                F.col("module"), F.col("message")), 256
+).alias("event_id"),
+
+F.sha2(
+    F.concat_ws("|", F.col("timestamp"), F.col("message")), 256
+).substr(1, 16).alias("log_id"),
+
+# NULL 값 필터링
+transformed = transformed.filter(
+    (F.col("event_time").isNotNull()) &
+    (F.col("log_level").isNotNull()) &
+    (F.col("module_name").isNotNull())
+)
+
+# 중복 제거
+transformed = transformed.dropDuplicates(["event_id"])`}
+              >
+                <p>
                   스키마를 명확히 정의하고, NULL 값 필터링과 중복 제거를 통해 데이터 품질을 보장하였습니다.<br/>
                   event_id와 log_id를 해시값으로 생성하여, 데이터의 멱등성과 고유성을 확보하였습니다.
                 </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">3. Iceberg 적재 및 최적화</h4>
-                <p className="text-sm text-gray-700">
+              </CodeToggle>
+              <CodeToggle
+                title="3. Iceberg 적재 및 최적화"
+                language="sql"
+                code={`# Iceberg 테이블 생성 (자동 생성/검증)
+spark.sql("""
+CREATE TABLE IF NOT EXISTS local.silver.fact_app_logs (
+  event_id       STRING,
+  log_id         STRING,
+  event_time     TIMESTAMP,
+  log_level      STRING,
+  module_name    STRING,
+  log_message    STRING,
+  app_domain     STRING,
+  message_length INT,
+  event_date     DATE,
+  event_hour     INT
+)
+USING iceberg
+PARTITIONED BY (event_date, app_domain)
+TBLPROPERTIES (
+  'write.metadata.delete-after-commit.enabled'='true',
+  'write.metadata.previous-versions-max'='10',
+  'write.distribution-mode'='hash'
+)
+""")
+
+# Iceberg 적재 (MERGE 전략)
+merge_result = spark.sql("""
+    MERGE INTO local.silver.fact_app_logs target
+    USING staging_logs source
+    ON target.event_id = source.event_id
+    WHEN NOT MATCHED THEN INSERT *
+""")`}
+              >
+                <p>
                   Iceberg 테이블을 자동 생성/검증하는 로직을 구현하여 운영 편의성을 높였습니다.<br/>
-                  event_date로 파티셔닝을 구성하여 쿼리 성능을 최적화하였습니다.<br/>
-                  적재할때 중복 제거와 신규 데이터만 삽입이 가능하도록 merge 구현하였습니다.
+                  event_date로 파티셔닝하여 parquet으로 저장하고 있습니다.<br/>
+                  적재할때 중복 제거와 신규 데이터만 삽입이 가능하도록 적재하고 있습니다.
                 </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">4. 멱등성 키 관리</h4>
-                <p className="text-sm text-gray-700 mb-2">
+              </CodeToggle>
+              <CodeToggle
+                title="4. 멱등성 키 관리"
+                code={`# event_id = 멱등성 키
+F.sha2(
+    F.concat_ws("|", F.col("timestamp"), F.col("level"),
+                F.col("module"), F.col("message")), 256
+).alias("event_id")
+
+# MERGE 과정에서 event_id로 중복 제거
+ON target.event_id = source.event_id
+WHEN NOT MATCHED THEN INSERT *`}
+              >
+                <p>
                   merge를 위한 멱등성 키를 생성하여 데이터의 고유성을 보장했습니다.<br/>
                   각 레코드는 반드시 유일한 키를 가져야 하며, 중복 처리 시 정확한 업데이트가 가능하도록 설계했습니다.
                 </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">5. Timestamp 표준화</h4>
-                <p className="text-sm text-gray-700 mb-2">
+              </CodeToggle>
+              <CodeToggle
+                title="5. Timestamp 표준화"
+                code={`# timestamp -> 표준 Spark Timestamp 변환
+F.to_timestamp(F.col("timestamp")).alias("event_time"),
+
+# NULL 값 허용하지 않도록 필터링
+transformed = transformed.filter(
+    (F.col("event_time").isNotNull())
+)`}
+              >
+                <p>
                   timestamp는 특히 중요한 필드로, NULL 값을 허용하지 않도록 강제했습니다.<br/>
                   다양한 포맷으로 입력되는 시간 데이터를 모두 ISO8601 표준으로 변환하여 일관성을 확보했습니다.
                 </p>
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">6. 위치 데이터 정합성</h4>
-                <p className="text-sm text-gray-700 mb-2">
-                  위도, 경도 데이터의 유효성을 검증하고 범위를 체크했습니다.<br/>
-                  위치 데이터가 있는 경우 좌표계 변환과 정확도 검증을 수행했습니다.
+              </CodeToggle>
+              <CodeToggle
+                title="6. 위치 데이터 정합성"
+                code={`# 위도/경도 유효성 검증
+transformed = transformed.filter(
+    (F.col("lat").between(-90, 90)) &
+    (F.col("lon").between(-180, 180))
+)`}
+              >
+                <p>
+                  위도, 경도 데이터의 유효성을 검증하고 범위를 체크(-180,180)했습니다.<br/>
                 </p>
-              </div>
+              </CodeToggle>
               </div>
             </div>
           </div>
 
           {/* 테이블 스키마 */}
-          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden mb-4">
             <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
               <h3 className="text-xl font-bold text-gray-900 mb-1">
                 <span className="text-sm text-blue-600 font-medium mr-3">02</span>테이블 스키마
@@ -496,8 +708,8 @@ export default function Project1() {
           </div>
         </section>
 
-        <section className="mb-12">
-          <div className="space-y-6">
+        <section className="mb-8">
+          <div className="space-y-4">
             {/* 데이터 살펴보기 */}
             <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
@@ -523,9 +735,11 @@ export default function Project1() {
               </p>
 
               <div className="bg-gray-200 rounded-lg shadow-md p-4">
-                <img
+                <Image
                   src="/applog.png"
                   alt="앱로그 데이터 복잡성 시각화 - 시간대별 모듈별 로그 발생 패턴"
+                  width={800}
+                  height={400}
                   className="w-full rounded-lg"
                 />
               </div>
@@ -625,9 +839,11 @@ export default function Project1() {
               </p>
               <div className="mb-4">
                 <div className="bg-gray-200 rounded-lg shadow-md p-4">
-                  <img
+                  <Image
                     src="/urllog.png"
                     alt="로그 메시지 발생 분포 - URLScheme 로그 패턴 시각화"
+                    width={800}
+                    height={400}
                     className="w-full rounded-lg"
                   />
                 </div>
@@ -636,13 +852,34 @@ export default function Project1() {
                 </p>
               </div>
 
-              <pre className="bg-gray-900 text-gray-100 p-3 rounded text-xs overflow-x-auto mb-3">
-                <code>{`Execute scheme: banktoss://account-mmda/onboard...
-Execute scheme: supertoss://home/dst/account?re...
-Execute scheme: supertoss://home/account?_auth_...
-Execute scheme: supertoss://home/dst/point?refe...
-Execute scheme: servicetoss://mobility?type=ELE...`}</code>
-              </pre>
+              <div className="mb-3">
+                <SyntaxHighlighter
+                  language="text"
+                  style={vscDarkPlus}
+                  className="rounded text-xs"
+                  customStyle={{
+                    margin: 0,
+                    padding: '0.75rem',
+                    fontSize: '0.75rem',
+                    lineHeight: '1.5',
+                    backgroundColor: '#1e1e1e'
+                  }}
+                  wrapLines={true}
+                  lineProps={(lineNumber) => ({
+                    style: {
+                      color: lineNumber % 2 === 1 ? '#ffd700' : '#87ceeb'
+                    }
+                  })}
+                >
+{`[2024-03-15 10:30:15.123] Execute scheme: banktoss://account-mmda/onboard?step=verification&userId=12345&timestamp=2024-03-15T10:30:00Z&sessionId=sess_98765
+[2024-03-15 10:30:16.045] Execute scheme: supertoss://home/dst/account?referrer=main&category=savings&productId=prod_789&userId=12345&auth_token=tk_abc123
+[2024-03-15 10:30:17.167] Execute scheme: supertoss://home/account?_auth_required=true&redirect_uri=dashboard&scope=read_profile&client_id=mobile_app_v2
+[2024-03-15 10:30:18.234] Execute scheme: supertoss://home/dst/point?referrer=rewards&action=redeem&pointValue=500&userId=12345&campaignId=spring2024
+[2024-03-15 10:30:19.456] Execute scheme: servicetoss://mobility?type=ELECTRIC_SCOOTER&location=gangnam&pickup_time=2024-03-15T11:00:00Z&userId=12345
+[2024-03-15 10:30:20.789] Execute scheme: banktoss://transfer/send?amount=50000&recipient_account=1234567890&memo=카페비용&currency=KRW&userId=12345
+[2024-03-15 10:30:21.912] Execute scheme: supertoss://investment/stocks?symbol=TSLA&action=buy&quantity=5&orderType=market&userId=12345&portfolioId=port_456`}
+                </SyntaxHighlighter>
+              </div>
               <div className="bg-blue-50 p-3 rounded">
                 <p className="text-sm text-gray-700 mb-2">
                   <strong>URLScheme은 프론트엔드에서 호출하는 딥링크로, 사용자가 버튼을 누르거나 특정 액션을 취했을 때 다음 페이지를 호출합니다. 제 수중의 데이터는 총 2076의 레코드가 있었는데, 1006건의 고유한 값들이 있었습니다.</strong>
@@ -690,11 +927,11 @@ Execute scheme: servicetoss://mobility?type=ELE...`}</code>
               </div>
             </div>
           </div>
-          
+        </section>
 
-          <div className="space-y-6">
-            {/* 도메인 카디널리티 줄이기 */}
-            <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+        <section className="mb-8">
+          {/* 도메인 카디널리티 줄이기 */}
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
                   <span className="text-sm text-blue-600 font-medium mr-3">04</span>도메인 카디널리티를 줄이기 위한 방법
@@ -800,9 +1037,11 @@ Execute scheme: servicetoss://mobility?type=ELE...`}</code>
                 </div>
               </div>
             </div>
+        </section>
 
-            {/* 분석 시리즈 2: 세션 구분하기 */}
-            <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+        <section className="mb-8">
+          {/* 분석 시리즈 2: 세션 구분하기 */}
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
                   <span className="text-sm text-blue-600 font-medium mr-3">05</span>세션 구분하기
@@ -815,9 +1054,11 @@ Execute scheme: servicetoss://mobility?type=ELE...`}</code>
               <div className="p-6">
                 <div className="mb-6">
                   <div className="bg-gray-200 rounded-lg shadow-md p-4">
-                    <img
+                    <Image
                       src="/session.png"
                       alt="세션 구분 분석 차트"
+                      width={800}
+                      height={400}
                       className="w-full rounded-lg"
                     />
                   </div>
@@ -835,10 +1076,10 @@ Execute scheme: servicetoss://mobility?type=ELE...`}</code>
                     </p>
                   </div>
 
-                  <div className="mb-4">
-                    <h4 className="font-bold text-blue-600 mb-3">세션 구분 SQL 쿼리</h4>
-                    <pre className="bg-gray-900 text-gray-100 p-4 rounded text-xs overflow-x-auto">
-                      <code>{`WITH urlscheme_sessions AS (
+                  <CodeToggle
+                    title="세션 구분 SQL 쿼리"
+                    language="sql"
+                    code={`WITH urlscheme_sessions AS (
   SELECT
     event_time,
     CASE
@@ -890,9 +1131,13 @@ SELECT
   COUNT(*) FILTER (WHERE module_name = 'URLScheme') AS urlscheme_event_count
 FROM session_events
 GROUP BY session_id, session_start, session_end
-ORDER BY session_start;`}</code>
-                    </pre>
-                  </div>
+ORDER BY session_start;`}
+                  >
+                    <p className="text-gray-700 text-sm">
+                      세션을 정의하기 위해 시간 간격 기반으로 그룹핑하는 SQL입니다.
+                      10분(600초) 기준으로 세션을 나누어 자연스러운 사용자 행동 단위를 정의했습니다.
+                    </p>
+                  </CodeToggle>
 
                   <div className="space-y-3">
                     <h4 className="font-bold text-blue-600">세션 윈도우 최적화</h4>
@@ -912,10 +1157,9 @@ ORDER BY session_start;`}</code>
                 </div>
               </div>
             </div>
-          </div>
         </section>
 
-        <section className="mb-12">
+        <section className="mb-8">
             {/* 주요 분석 결과 */}
             <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
