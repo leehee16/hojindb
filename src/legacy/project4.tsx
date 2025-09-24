@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Project4() {
   return (
     <div className="space-y-8">
@@ -68,7 +70,7 @@ export default function Project4() {
               그러나 주제를 구체화하는 과정은 쉽지 않았습니다. 팀원마다 이해 수준과 관점이 달라 논의가 평행선을 달렸고, 특히 LLM을 다루면서도 기존 머신러닝의 예측·분류 문제로 단순 환원하는 경우가 많았습니다. 그 결과 <strong>연구 주제를 확정하지 못했습니다</strong>.
             </p>
             <p className="text-gray-700 text-sm leading-relaxed mb-3">
-              이 난관을 넘기 위해 <strong>협업 방식을 구체화</strong>했습니다. 논의한 내용을 곧바로 문서화해 슬랙에 공유했고, 논문이나 아이디어 리뷰는 한 명이 핵심을 요약하면 나머지 팀원들이 각자 리포트를 작성해 다시 공유하는 식으로 진행했습니다. 이렇게 함으로써 모두가 같은 정보를 갖게 되었고, 각자가 어디까지 이해했는지를 확인할 수 있었습니다. 또한 업무마다 어디까지 하면 끝이라고 볼 것인지를 분명히 정해 흐지부지되는 일을 막았습니다.
+              이 문제를 해결하기 위해 <strong>협업 방식을 구체화</strong>했습니다. 논의한 내용을 곧바로 문서화해 슬랙에 공유했고, 논문이나 아이디어 리뷰는 한 명이 핵심을 요약하면 나머지 팀원들이 각자 리포트를 작성해 다시 공유하는 식으로 진행했습니다. 이렇게 함으로써 모두가 같은 정보를 갖게 되었고, 각자가 어디까지 이해했는지를 확인할 수 있었습니다. 또한 업무마다 어디까지 하면 끝이라고 볼 것인지를 분명히 정해 흐지부지되는 일을 막았습니다.
             </p>
             <p className="text-gray-700 text-sm leading-relaxed">
               이런 체계 덕분에 방법론을 바꿀 때도 <strong>빠르게 움직일 수 있었습니다.</strong> 초기에는 T5 인코더–디코더 모델을 파인튜닝하며 성능 고도화를 시도했지만, 투입 대비 성과가 제한적이라는 결론에 도달했습니다. 거의 하루 이내에 새로운 방향성으로 전환할 수 있었는데, 앞서 남겨둔 문서와 각 접근법의 장단점 기록하고 공유할 수 있었기 때문입니다.
@@ -87,9 +89,11 @@ export default function Project4() {
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <div className="flex justify-center mb-2">
-                  <img 
+                  <Image 
                     src="/fortsrc/figure_MFRM4.png" 
                     alt="MFRM 기반 편향 보정 아키텍처"
+                    width={600}
+                    height={280}
                     className="max-w-full h-auto rounded-lg shadow-md border border-gray-200"
                     style={{ maxHeight: '280px' }}
                   />
@@ -98,9 +102,11 @@ export default function Project4() {
               </div>
               <div>
                 <div className="flex justify-center mb-2">
-                  <img 
+                  <Image 
                     src="/fortsrc/flow4.png" 
                     alt="방법론 개요 - 편향 추정 및 보정 파이프라인"
+                    width={600}
+                    height={280}
                     className="max-w-full h-auto rounded-lg shadow-md border border-gray-200"
                     style={{ maxHeight: '280px' }}
                   />

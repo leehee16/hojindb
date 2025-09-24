@@ -1,12 +1,38 @@
 @import "tailwindcss";
 
+/* Moneygraphy Rounded web font (via Noonnu CDN) */
+@font-face {
+  font-family: "MoneygraphyTTF Rounded";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307@1.1/MoneygraphyTTFRound.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tossface emoji font (official CDN) */
+@font-face {
+  font-family: "Toss Face Font Mac";
+  src: url("https://static.toss.im/font/TossFaceFontMac-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tossface";
+  src: url("https://static.toss.im/font/TossFaceFontMac-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   margin: 0;
   padding: 0;
 }
 
 .tossface {
-  font-family: "Tossface", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  font-family: "Toss Face Font Mac", "Tossface", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
   font-feature-settings: "liga" on, "clig" on;
   font-variant-emoji: emoji;
 }

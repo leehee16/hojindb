@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import PortfolioSidebar from '@/components/PortfolioSidebar'
 
 export const metadata = {
@@ -101,27 +102,38 @@ export default function PortfolioPage() {
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">파편화된 일상 데이터를 통합·정제해 분석 가능한 형태로 전환</p>
                   <div className="flex flex-wrap gap-2">
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
                       alt="Pandas"
+                      width={132}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=databricks&logoColor=white" 
                       alt="SQL"
+                      width={110}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Apache%20Iceberg-00B4D8?style=for-the-badge&logo=apache&logoColor=white" 
-                      alt="Iceberg"
+                      alt="Apache Iceberg"
+                      width={190}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
                   </div>
                 </div>
                 <div className="absolute bottom-0 right-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-40">
-                  <img 
+                  <Image 
                     src="/p1.png" 
                     alt="Data Lakehouse Artwork" 
+                    width={320}
+                    height={320}
                     className="w-80 h-80 object-cover object-top transform group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
@@ -137,27 +149,38 @@ export default function PortfolioPage() {
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">산업에서 기업·제품으로 이어지는 매핑과 탐색 구조, UI 설계</p>
                   <div className="flex flex-wrap gap-2">
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" 
                       alt="FastAPI"
+                      width={140}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" 
                       alt="Next.js"
+                      width={130}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" 
                       alt="Docker"
+                      width={140}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
                   </div>
                 </div>
                 <div className="absolute bottom-0 right-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-40">
-                  <img 
+                  <Image 
                     src="/p2.png" 
                     alt="Industrial Analysis Artwork" 
+                    width={320}
+                    height={320}
                     className="w-80 h-80 object-cover object-top transform group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
@@ -173,27 +196,38 @@ export default function PortfolioPage() {
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">인퍼런스 실험 자동화 툴 개발</p>
                   <div className="flex flex-wrap gap-2">
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
                       alt="Pandas"
+                      width={132}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" 
                       alt="GCP"
+                      width={120}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/OpenRouter-000000?style=for-the-badge&logo=openai&logoColor=white" 
                       alt="OpenRouter"
+                      width={160}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
                   </div>
                 </div>
                 <div className="absolute bottom-0 right-14 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-36 w-72">
-                  <img 
+                  <Image 
                     src="/p3.png" 
                     alt="LLM Experiment Orchestrator Artwork" 
+                    width={208}
+                    height={208}
                     className="w-52 h-52 object-cover object-top transform group-hover:scale-110 transition-transform duration-300 -mt-6 ml-20"
                   />
                 </div>
@@ -209,27 +243,38 @@ export default function PortfolioPage() {
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed mb-3">인간 없이도 공정한 채점을 위한 방법론 연구</p>
                   <div className="flex flex-wrap gap-2">
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" 
                       alt="Pandas"
+                      width={132}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" 
                       alt="PyTorch"
+                      width={140}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
-                    <img 
+                    <Image 
                       src="https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white" 
                       alt="SciPy"
+                      width={132}
+                      height={32}
                       className="h-6 rounded-lg opacity-70"
+                      unoptimized
                     />
                   </div>
                 </div>
                 <div className="absolute bottom-0 right-14 opacity-40 group-hover:opacity-60 transition-opacity duration-300 overflow-hidden h-36 w-80">
-                  <img 
+                  <Image 
                     src="/p4.png" 
                     alt="ADBIAS Research Artwork" 
+                    width={208}
+                    height={208}
                     className="w-52 h-52 object-cover object-top transform group-hover:scale-110 transition-transform duration-300 mt-2 ml-24"
                   />
                 </div>

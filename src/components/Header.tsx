@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Header() {
   return (
@@ -7,10 +8,13 @@ export default function Header() {
         {/* Logo and Title */}
         <Link href="/" className="flex items-center space-x-2 sm:space-x-3 hover:opacity-80 transition-opacity">
           {/* SVG Logo */}
-          <img 
+          <Image 
             src="/logo.svg" 
             alt="Logo" 
+            width={32}
+            height={32}
             className="w-7 h-7 sm:w-8 sm:h-8"
+            priority
           />
           <span className="text-lg sm:text-xl font-semibold text-gray-900">Hojin</span>
         </Link>

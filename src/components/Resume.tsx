@@ -126,7 +126,7 @@ export default function Resume() {
               
               <div className="ml-4 space-y-0 text-sm">
                 <p className="text-gray-700">분산된 개인 데이터(디바이스, 거래내역, 행동로그)를 통합하고 체계화하여 확장 가능한 레이크하우스 구축</p>
-                <p className="text-gray-900 font-semibold">토스 앱로그와 금융 데이터를 결합 분석해 유저 행동 패턴과 지출 상관관계 도출</p>
+                <p className="text-gray-900 font-semibold">토스 앱로그와 마이 데이터를 결합 분석할 수 있는 환경 구축</p>
                 <div className="flex flex-wrap gap-1">
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mx-1">Pandas</span>
                   <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs mx-1">Matplotlib</span>

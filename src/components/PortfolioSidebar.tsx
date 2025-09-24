@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function PortfolioSidebar() {
   const [headerHeight, setHeaderHeight] = useState(0)
@@ -34,10 +35,13 @@ export default function PortfolioSidebar() {
             데이터를 통해 문제를 해결하고 효율성을 높이는 것에 관심이 많습니다.
           </p>
           <div className="text-center">
-            <img 
+            <Image 
               src="/profile.JPG" 
               alt="이호진" 
+              width={128}
+              height={128}
               className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-gray-100"
+              priority
             />
           </div>
         </div>

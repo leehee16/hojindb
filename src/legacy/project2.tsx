@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 // Table 컴포넌트 인라인 정의
 interface TableProps {
   headers: string[];
@@ -125,9 +127,11 @@ export default function Project2() {
         <section className="mb-6">
           <div className="bg-gray-200 pt-6 px-6 rounded-lg">
             <div className="rounded-t-lg overflow-hidden">
-              <img 
+              <Image 
                 src="/fortsrc/agent2.png" 
                 alt="산업 분석 에이전트 검색 인터페이스"
+                width={1200}
+                height={400}
                 className="w-full h-auto"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
               />

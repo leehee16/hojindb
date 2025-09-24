@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function Project3() {
   return (
     <div className="space-y-8">
@@ -67,9 +69,11 @@ export default function Project3() {
         <section className="mb-6">
           <div className="bg-gray-200 pt-6 px-6 rounded-lg">
             <div className="rounded-t-lg overflow-hidden">
-              <img 
+              <Image 
                 src="/fortsrc/infer3.png" 
                 alt="LLM 실험 관리 대시보드"
+                width={1200}
+                height={400}
                 className="w-full h-auto"
                 style={{ maxHeight: '400px', objectFit: 'cover' }}
               />
@@ -89,9 +93,11 @@ export default function Project3() {
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <div className="flex justify-center mb-2">
-                  <img 
+                  <Image 
                     src="/fortsrc/flow3.png" 
                     alt="실험 파이프라인"
+                    width={600}
+                    height={250}
                     className="max-w-full h-auto rounded-lg border border-gray-200"
                     style={{ maxHeight: '250px' }}
                   />
@@ -100,9 +106,11 @@ export default function Project3() {
               </div>
               <div>
                 <div className="flex justify-center mb-2">
-                  <img 
+                  <Image 
                     src="/fortsrc/erd3.png" 
                     alt="실험 데이터 ERD"
+                    width={600}
+                    height={250}
                     className="max-w-full h-auto rounded-lg border border-gray-200"
                     style={{ maxHeight: '250px' }}
                   />
