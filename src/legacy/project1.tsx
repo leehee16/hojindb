@@ -54,61 +54,6 @@ function Table({ headers, rows, className = "" }: TableProps) {
   );
 }
 
-function LogStatTable({ data }: { data: unknown[] }) {
-  const headers = ['Level', 'Module', '로그', '유니크', '유니크 비율'];
-  
-  const rows = [
-    [
-      { content: 'debug', rowspan: 4, className: 'font-medium bg-blue-50 text-blue-700 rounded-lg px-2 py-1' },
-      'Common',
-      '28,262',
-      '8,478',
-      { content: '30%', className: 'font-mono text-sm' }
-    ],
-    [
-      'URLScheme',
-      '2,076', 
-      '1,006',
-      { content: '48%', className: 'font-mono text-sm' }
-    ],
-    [
-      'Securities',
-      '2,098',
-      '4', 
-      { content: '0.2%', className: 'font-mono text-sm' }
-    ],
-    [
-      'Network',
-      '1,073',
-      '4',
-      { content: '0.4%', className: 'font-mono text-sm' }
-    ],
-    [
-      { content: 'error', rowspan: 2, className: 'font-medium bg-red-50 text-red-700 rounded-lg px-2 py-1' },
-      'Common',
-      '754',
-      '67',
-      { content: '9%', className: 'font-mono text-sm' }
-    ],
-    [
-      'EventLog',
-      '223',
-      '158', 
-      { content: '71%', className: 'font-mono text-sm' }
-    ],
-    [
-      { content: 'info', className: 'font-medium bg-green-50 text-green-700 rounded-lg px-2 py-1' },
-      'Cache',
-      '98,672',
-      '170',
-      { content: '0.2%', className: 'font-mono text-sm' }
-    ]
-  ];
-
-  return (
-    <Table headers={headers} rows={rows} className="text-xs" />
-  );
-}
 
 export default function Project1() {
   return (
@@ -131,16 +76,82 @@ export default function Project1() {
           <h2 className="text-2xl font-bold text-gray-900 mb-4">프로젝트 개요</h2>
           <div className="bg-gray-50 p-6 rounded-lg">
             <p className="text-gray-700 leading-relaxed mb-4">
-              내가 생성한 다양한 데이터를 체계적으로 분석해보고자 하는 동기로부터,
-              다양한 개인 데이터 소스를 통합적으로 분석할 수 있는 <strong>확장 가능한 데이터 레이크하우스</strong>를 설계·구축했습니다.
+              토스는 서비스 전반에서 방대한 데이터를 생성합니다.
+              이 데이터는 고객 경험을 이해하고 서비스 품질을 높이는 자산이지만,
+              안정적으로 활용 가능하도록 정제하는 과정에서
+              끊임없는 기술적 과제와 운영상의 복잡성이 뒤따릅니다.
             </p>
             <p className="text-gray-700 leading-relaxed mb-4">
-              이 과정에서 데이터가 수집되고 저장된 뒤 적재와 분석으로 이어지는 전 과정을 다루어, 데이터가 어떻게 변형되고 흘러가는지 경험했습니다.
-              또한 데이터 소스가 계속 추가되는 상황에 대응하고자, <strong>확장성</strong>을 프로젝트의 목표로 두었습니다.
+              저는 이 문제의식을 개인 데이터에 적용해 보았습니다.
+              거래 내역, 스마트폰 로그, 사진 메타데이터, 운동 기록 등 일상 속에서 생성되는 데이터는
+              서로 다른 소스와 형태를 가지며 파편화되어 있습니다.
+              이를 통합하고 의미 있는 인사이트로 전환하고자, <strong>데이터 레이크하우스</strong>를 설계하고 데이터를 검증했습니다. 
+              </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>첫째, 여러 데이터 원천에서 제가 직접 생성한 데이터를 수집했습니다.</strong><br/>
+              예를들어, <strong>금융 거래내역</strong>은 개별 건을 이벤트 단위로 나눌 수 있고, 타임스탬프가 명확해 분석에 적합했습니다. 카드사나 은행에서 이 다운로드 내려받아 이용했습니다.
+              또한 <strong>일상적으로 작성하는 글</strong>은 Obsidian에서 .md 형태로 저장하는데, 생성 일시, 주제, 폴더 구조 등
+              메타데이터가 유용한 소스가 될 수 있었습니다.
+              <strong>스마트폰 데이터</strong>에서는 사진 메타데이터와 애플리케이션 로그를 확보할 수 있었으며,
+              이 중 앱 로그 데이터를 선별해 활용했습니다.
             </p>
-            <p className="text-gray-700 leading-relaxed">
-              파이프라인 설계 단계에서 데이터 특성과 품질을 검증하고, 모호한 데이터도 빠르게 적재할 수 있는 파이프라인을 설계하고자했습니다.
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>둘째, 이렇게 수집한 데이터를 활용하기 쉬운 형태로 변환하고 검증했습니다.</strong><br/>
+              원천 데이터는 형태와 맥락이 제각각이었기 때문에 그대로는 분석에 쓰기 어려웠습니다.
+              스키마가 예고 없이 달라질 수 있다는 점을 감안해 진화에 유연하게 대응할 수 있도록 했고,
+              처리 과정에서 어떤 변화가 일어났는지 추적할 수 있도록 족적을 남겼습니다.
+              중복이나 오류가 결과에 영향을 주지 않도록 키를 설계했으며,
+              시계열·위치 정보에서 발생하는 이상값은 정제 과정을 거쳐 신뢰할 수 있는 데이터로 다듬었습니다.
             </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              <strong>셋째, 가공한 데이터가 분석 목표에 적합한지 테스트하기위해 분석해보았습니다.</strong><br/>
+              예를들어 내가 어떤 서비스를 이용하고, 어떤 서비스가 내 행위에 영향을 받고, 서비스의 시퀀스가 어떻게 영향을 받는지 파악하기 위해 아래와 같은 마트를 구성할 수 있도록 하는 것이 목표입니다.
+            </p>
+
+            {/* 목표 테이블 구조 */}
+            <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4">
+              <Table
+                headers={[
+                  'session_id', 'event_order', 'event_time', 'event_type', 'service', 'duration_sec'
+                ]}
+                rows={[
+                  [
+                    's001', '1', '2025-07-01 09:05:00', 'supertoss_home', 'supertoss', '30'
+                  ],
+                  [
+                    's001', '3', '2025-07-01 09:07:30', 'banktoss_detail', 'banktoss', '600'
+                  ],
+                  [
+                    's002', '2', '2025-07-01 12:16:00', 'securities_portfolio', 'securities', '450'
+                  ],
+                  [
+                    's003', '1', '2025-07-01 15:30:00', 'bank_transfer_init', 'bank', '45'
+                  ]
+                ]}
+                className="text-xs"
+              />
+            </div>
+
+            {/* 세션 컨텍스트 테이블 - 피벗 형식 */}
+            <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4 mt-4">
+              <Table
+                headers={[
+                  'session_id', 'steps_before', 'photos_during', 'notes_during', 'txn_after'
+                ]}
+                rows={[
+                  [
+                    's001', '12034', '4', '0', '200000'
+                  ],
+                  [
+                    's002', '540', '0', '3', '0'
+                  ],
+                  [
+                    's003', '8200', '2', '1', '50000'
+                  ]
+                ]}
+                className="text-xs"
+              />
+            </div>
           </div>
         </section>
 
@@ -222,7 +233,7 @@ export default function Project1() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">3</div>
+                      <div className="font-mono text-sm font-bold text-gray-700">16</div>
                       <div className="text-xs text-gray-500">files</div>
                     </div>
                   </div>
@@ -237,8 +248,8 @@ export default function Project1() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-mono text-sm font-bold text-gray-700">8</div>
-                      <div className="text-xs text-gray-500">file</div>
+                      <div className="font-mono text-sm font-bold text-gray-700">19</div>
+                      <div className="text-xs text-gray-500">files</div>
                     </div>
                   </div>
                 </div>
@@ -279,7 +290,7 @@ export default function Project1() {
                     <span className="font-bold text-lg text-gray-800">Bronze</span>
                   </div>
                   <div className="text-xs text-gray-600 max-w-32">
-                    스마트폰 앱 로그, 사진 메타데이터, 헬스데이터 원본
+                    스마트폰 앱 로그, 사진 메타데이터, 헬스데이터 원본 등
                   </div>
                 </div>
 
@@ -295,7 +306,7 @@ export default function Project1() {
                     <span className="font-bold text-lg text-gray-800">Silver</span>
                   </div>
                   <div className="text-xs text-gray-600 max-w-32">
-                    Parquet로 가공한 팩트테이블들 (f_Activity, f_Transaction)
+                    Parquet로 가공한 팩트테이블들
                   </div>
                 </div>
 
@@ -323,151 +334,636 @@ export default function Project1() {
       {/* Page 3: Project 1 - Page 2 */}
       <div className="content-container py-8">
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">팩트 테이블 모델링</h2>
-          <div className="bg-gray-200 rounded-lg p-4">
-            <Table 
-              headers={['Fact 테이블', '그레인', '주요 차원', '사실 유형', '데이터 원천']}
-              rows={[
-                [
-                  { content: 'f_Activity', className: 'font-mono font-bold' },
-                  '생성물 1건',
-                  'Date, Time, Location',
-                  'Event',
-                  '사진 메타데이터'
-                ],
-                [
-                  { content: 'f_Transaction', className: 'font-mono font-bold' },
-                  '거래 1건',
-                  'Date, Time, Merchant',
-                  'Transaction',
-                  '은행/카드 거래내역'
-                ],
-                [
-                  { content: 'f_Mobile', className: 'font-mono font-bold' },
-                  '로그 1~3회',
-                  'Date, Time, App, Location',
-                  'Event',
-                  '앱 사용 로그'
-                ]
-              ]}
-              className="text-sm"
-            />
+          {/* 데이터 정합성 */}
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">
+                <span className="text-sm text-blue-600 font-medium mr-3">01</span>데이터 정합성
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                데이터의 수집하고 적재하고 정의하는 과정에서 발생할 수 있는 이슈를 식별하고 품질을 검증했습니다.
+              </p>
+            </div>
+
+            <div className="p-6">
+              <div className="space-y-3">
+              <div>
+                <h4 className="font-semibold text-gray-800">1. 데이터 리니지 추적</h4>
+                <p className="text-sm text-gray-700 mb-3">
+                  OpenLineage와 Spark Listener를 활용하여 ETL 수행 이력과 데이터 흐름을 자동으로 기록하였습니다.<br/>
+                  입력 및 출력 데이터셋의 스키마, 소스 URI, 레코드 수를 메타데이터를 저장하여, 추적가능하도록 구성했습니다.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">2. 데이터 품질 및 정합성 관리</h4>
+                <p className="text-sm text-gray-700 mb-3">
+                  스키마를 명확히 정의하고, NULL 값 필터링과 중복 제거를 통해 데이터 품질을 보장하였습니다.<br/>
+                  event_id와 log_id를 해시값으로 생성하여, 데이터의 멱등성과 고유성을 확보하였습니다.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">3. Iceberg 적재 및 최적화</h4>
+                <p className="text-sm text-gray-700">
+                  Iceberg 테이블을 자동 생성/검증하는 로직을 구현하여 운영 편의성을 높였습니다.<br/>
+                  event_date로 파티셔닝을 구성하여 쿼리 성능을 최적화하였습니다.<br/>
+                  적재할때 중복 제거와 신규 데이터만 삽입이 가능하도록 merge 구현하였습니다.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">4. 멱등성 키 관리</h4>
+                <p className="text-sm text-gray-700 mb-2">
+                  merge를 위한 멱등성 키를 생성하여 데이터의 고유성을 보장했습니다.<br/>
+                  각 레코드는 반드시 유일한 키를 가져야 하며, 중복 처리 시 정확한 업데이트가 가능하도록 설계했습니다.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">5. Timestamp 표준화</h4>
+                <p className="text-sm text-gray-700 mb-2">
+                  timestamp는 특히 중요한 필드로, NULL 값을 허용하지 않도록 강제했습니다.<br/>
+                  다양한 포맷으로 입력되는 시간 데이터를 모두 ISO8601 표준으로 변환하여 일관성을 확보했습니다.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-800">6. 위치 데이터 정합성</h4>
+                <p className="text-sm text-gray-700 mb-2">
+                  위도, 경도 데이터의 유효성을 검증하고 범위를 체크했습니다.<br/>
+                  위치 데이터가 있는 경우 좌표계 변환과 정확도 검증을 수행했습니다.
+                </p>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 테이블 스키마 */}
+          <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+            <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-1">
+                <span className="text-sm text-blue-600 font-medium mr-3">02</span>테이블 스키마
+              </h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                차원 테이블과 팩트 테이블 구조 정의
+              </p>
+            </div>
+
+            <div className="p-6">
+              <div className="space-y-6">
+                {/* 차원 테이블 */}
+                <div className="mb-6">
+                  <h4 className="font-bold text-blue-600 mb-3">차원 테이블</h4>
+                  <div className="bg-gray-200 rounded-lg p-4">
+                    <Table
+                      headers={['테이블명', '설명', '주요 컬럼', '비고']}
+                      rows={[
+                        [
+                          { content: 'dim_date', className: 'font-mono font-bold text-blue-600' },
+                          '날짜 차원',
+                          'date_key, year, quarter, month',
+                          '2020-2030년'
+                        ],
+                        [
+                          { content: 'dim_merchant', className: 'font-mono font-bold text-blue-600' },
+                          '거래처 정보',
+                          'merchant_key, merchant_name, category',
+                          '926개 거래처'
+                        ],
+                        [
+                          { content: 'dim_bus_stop', className: 'font-mono font-bold text-blue-600' },
+                          '위치/정류장 정보',
+                          'latitude, longitude, geohash, admin_name',
+                          '206,018개 정류장'
+                        ],
+                        [
+                          { content: 'dim_toss_event', className: 'font-mono font-bold text-blue-600' },
+                          '토스 이벤트 분류',
+                          'event_key, event_category, domain',
+                          'URLScheme 분류'
+                        ]
+                      ]}
+                      className="text-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* 팩트 테이블 */}
+                <div className="mb-6">
+                  <h4 className="font-bold text-blue-600 mb-3">팩트 테이블</h4>
+                  <div className="bg-gray-200 rounded-lg p-4">
+                    <Table
+                      headers={['테이블명', '그레인', '주요 측정값', '데이터 원천', '건수']}
+                      rows={[
+                        [
+                          { content: 'fact_app_logs', className: 'font-mono text-xs font-semibold text-blue-700' },
+                          '로그 이벤트 1건',
+                          'event_time, log_level, module_name',
+                          '토스앱 디바이스 로그',
+                          '124,622건'
+                        ],
+                        [
+                          { content: 'fact_transaction', className: 'font-mono text-xs font-semibold text-blue-700' },
+                          '거래 1건',
+                          'amount, merchant_key, txn_type',
+                          '은행/카드 거래내역',
+                          '5,411건'
+                        ],
+                        [
+                          { content: 'fact_movement', className: 'font-mono text-xs font-semibold text-blue-700' },
+                          '시간별 활동 1건',
+                          'steps, active_calories, distance_km',
+                          '아이폰 헬스/운동 데이터',
+                          '107,608건'
+                        ],
+                        [
+                          { content: 'fact_obsidian_notes', className: 'font-mono text-xs font-semibold text-blue-700' },
+                          '노트 작성 1건',
+                          'word_count, wikilinks, tags',
+                          'Obsidian 메타데이터',
+                          '517건'
+                        ],
+                        [
+                          { content: 'fact_photo_metadata', className: 'font-mono text-xs font-semibold text-blue-700' },
+                          '사진 촬영 1건',
+                          'latitude, longitude, creation_time',
+                          '아이폰 사진 EXIF',
+                          '17,515건'
+                        ]
+                      ]}
+                      className="text-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">토스앱 로그 분석</h2>
-          <p className="text-gray-700 italic mb-6">
-            데이터를 적재한 후, 스마트폰의 디바이스 로그와 토스뱅크 거래내역을 뽑아 분석을 진행했습니다. 
-            앱 로그의 경우, <strong>2025-04-08~2025-08-27</strong>의 데이터가 수집하였고, 거래내역의 경우, 2021년부터 데이터를 수집했습니다.
-            로그는 일자별로 구분되어 기록되고 있었는데, 로그파일과 date가 100% 일치하는 것으로 보아, 데이터가 모두 디바이스에서 생성되었다고 짐작할 수 있습니다.
-          </p>
-          
-
           <div className="space-y-6">
-            {/* 분석 시리즈 1: 캐싱 실패 패턴 */}
+            {/* 데이터 살펴보기 */}
             <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  <span className="text-sm text-blue-600 font-medium mr-3">01</span>왜 캐싱 실패만 집중적으로 로깅할까?
+                  <span className="text-sm text-blue-600 font-medium mr-3">03</span>데이터 살펴보기
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  캐시 모듈, 커먼 모듈 로그 분석
+                  로그 데이터의 원천과 구조를 분석하여 데이터 품질을 파악
                 </p>
               </div>
-              
-              <div className="p-6">
-                <div className="space-y-4">
-                  <p className="text-gray-700 leading-relaxed">
-                    Cache 모듈의 98,684개 로그 중 98,671개가 valueNotFound로, 성공으로 기록된 로그가 거의 없었습니다. 다른 모듈의 로그도 비슷한 양상이었는데,
-                    <strong> 디바이스에 캐시 실패를 주로 기록</strong>한다고 보고 그 이유를 고민해보았습니다.
-                  </p>
 
-                  <div className="bg-gray-200 rounded-lg p-4 mb-4">
-                    <h4 className="font-bold text-gray-900 mb-3">레벨별 로그 통계</h4>
-                    <LogStatTable data={[]} />
-                    <div className="mt-3 pt-3 border-t border-gray-300">
-                      <p className="text-gray-600 text-xs leading-relaxed">
-                        <span className="not-italic" style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>💡</span> <span className="italic">Common 모듈은 주로 디버그 용도로 활용되며, Cache 모듈은 Info 역할을 합니다. 다만 Cache 로그는 대부분 실패 위주로 기록되는 특징이 있습니다.</span>
-                      </p>
+              <div className="p-6">
+                <div className="space-y-6">
+
+            <div className="mb-6">
+              <ol className="text-sm text-gray-700 space-y-1 mb-3">
+                <li>1. AppDomainPlugin-com.vivarepublica.cash.notiService</li>
+                <li>2. AppDomainPlugin-3.com.vivarepublica.cash.WidgetExtension</li>
+                <li>3. AppDomain-com.vivarepublica.cash / Log</li>
+              </ol>                          
+              <p className="text-gray-700 mb-3">
+                토스 애플리케이션의 로그 데이터는 총 3군데 나눠서 저장되고 있었습니다. 이 데이터를 모두 적재한뒤, 아래와 같이 시간축으로 시각화를 해보았습니다.
+              </p>
+
+              <div className="bg-gray-200 rounded-lg shadow-md p-4">
+                <img
+                  src="/applog.png"
+                  alt="앱로그 데이터 복잡성 시각화 - 시간대별 모듈별 로그 발생 패턴"
+                  className="w-full rounded-lg"
+                />
+              </div>
+              <p className="text-sm text-gray-500 text-center mt-2">
+                시간대별 모듈별 로그 발생 패턴 - 일단위로 균일한 발생 패턴을 보여줍니다.
+              </p>
+            </div>
+            <div className="bg-gray-200 p-4 rounded-lg shadow-md mb-4">
+              <h4 className="font-bold text-gray-900 mb-3">로그 레벨 및 모듈별 분포</h4>
+              <div className="grid grid-cols-2 gap-4">
+                {/* 레벨별 요약 */}
+                <div className="bg-white rounded-lg p-3">
+                  <h5 className="text-sm font-semibold text-gray-700 mb-2">로그 레벨 분포</h5>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-semibold text-green-600">INFO</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-green-500 h-2 rounded-full" style={{width: '69.28%'}}></div>
+                        </div>
+                        <span className="text-xs font-mono">69.3%</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-semibold text-blue-600">DEBUG</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-blue-500 h-2 rounded-full" style={{width: '29.45%'}}></div>
+                        </div>
+                        <span className="text-xs font-mono">29.5%</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-semibold text-red-600">ERROR</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-red-500 h-2 rounded-full" style={{width: '0.79%'}}></div>
+                        </div>
+                        <span className="text-xs font-mono">0.8%</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-semibold text-yellow-600">WARN</span>
+                      <div className="flex items-center gap-2">
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-yellow-500 h-2 rounded-full" style={{width: '0.19%'}}></div>
+                        </div>
+                        <span className="text-xs font-mono">0.2%</span>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">Cache의 3계층</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      실패 원인은 memory 69,618 / user_defaults 26,048 / disk 3,005 순으로 나타납니다.
-                      <code className="bg-gray-200 px-1 py-0.5 rounded text-xs">memory → user_defaults</code>는 <strong>20.7%가 2초 내 발생</strong>했지만, 
-                      <code className="bg-gray-200 px-1 py-0.5 rounded text-xs">user_defaults → disk</code>는 관측되지 않았습니다. 
-                      즉, 캐시 조회간 <strong>유의미한 시퀀스가 없다</strong>고 판단했습니다.
-                    </p>
+                  <div className="mt-3 pt-2 border-t border-gray-200">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-gray-600">Total Logs</span>
+                      <span className="font-mono font-semibold">124,731</span>
+                    </div>
                   </div>
+                </div>
 
-                  <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">Common로그에서의 시퀀스</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      Common로그의 경우 airDrop 스캔과 Startup 단계 등 앱 초기화 상태 
-                      <code className="bg-gray-200 px-1 py-0.5 rounded text-xs">start, prepare, finish</code>를 나타내는 것으로 확인됩니다. 
-                      Common 로그는 일련의 시퀀스가 있어보여, Common로그와 Cache로그의 연관성을 조사해보았습니다.
-                    </p>
+                {/* 주요 모듈 */}
+                <div className="bg-white rounded-lg p-3">
+                  <h5 className="text-sm font-semibold text-gray-700 mb-2">주요 모듈 TOP 5</h5>
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-mono">Cache</span>
+                      <span className="text-gray-600">86,684 (69.5%)</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-mono">Common</span>
+                      <span className="text-gray-600">29,251 (23.4%)</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-mono text-orange-600 font-semibold">URLScheme <span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>⭐</span></span>
+                      <span className="text-gray-600">2,076 (1.7%)</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-mono">Securities</span>
+                      <span className="text-gray-600">2,101 (1.7%)</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-mono">SecuritiesNet</span>
+                      <span className="text-gray-600">1,887 (1.5%)</span>
+                    </div>
                   </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-bold text-gray-900 mb-2">결론</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      <code className="bg-white px-1 py-0.5 rounded text-xs">prepare → finish</code> 소요시간과 memory cache 이벤트 수의 피어슨 상관계수가 +0.54로 캐시 실패가 앱 초기화 성능에 영향을 미치는 것을 확인했습니다.
-                      토스 앱이 디바이스 내에서 발생하는 실패 지점을 관찰하고, 캐시 동작 과정에서의 
-                      <strong>성능 병목</strong>을 파악하려고 하거나, <strong>의도적으로 캐시하지않은 로그정책</strong>이 있을 것으로 유추할 수 있었습니다.
-                    </p>
+                  <div className="mt-3 pt-2 border-t border-gray-200">
+                    <p className="text-xs text-gray-600"><span style={{ fontFamily: '"Toss Face Font Mac", "Apple Color Emoji", "Segoe UI Emoji"' }}>⭐</span> 사용자 액션 로그</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 분석 시리즈 2: 금융 거래와 앱 이벤트 연관성 */}
+            <div className="mb-4">
+              <p className="text-gray-700 mb-3">
+                앱로그는 분명 프론트엔드에서 발생한 데이터입니다. 또한 '*.log'날짜와 로그의 날짜가 모두 일치하는 것으로 보아 데이터 발생지점과 적재지점이 같습니다. 즉, 기기에서 오롯이 생성된 데이터라고 판단할 수 있습니다.
+                여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 실패의 경우를 로깅하는 데이터였습니다. 문제는 이 로그가 나의 액션으로 생성되었는지 알 수 없다는 점이었습니다.
+                로그마다 내 행동을 대변해줄 수 있는 데이터를 찾다가..
+              </p>
+              <div className="mb-4">
+                <div className="bg-gray-200 rounded-lg shadow-md p-4">
+                  <img
+                    src="/urllog.png"
+                    alt="로그 메시지 발생 분포 - URLScheme 로그 패턴 시각화"
+                    className="w-full rounded-lg"
+                  />
+                </div>
+                <p className="text-sm text-gray-500 text-center mt-2">
+                  로그 메시지 발생 분포 - URLScheme 이벤트의 시간별 분포 패턴
+                </p>
+              </div>
+
+              <pre className="bg-gray-900 text-gray-100 p-3 rounded text-xs overflow-x-auto mb-3">
+                <code>{`Execute scheme: banktoss://account-mmda/onboard...
+Execute scheme: supertoss://home/dst/account?re...
+Execute scheme: supertoss://home/account?_auth_...
+Execute scheme: supertoss://home/dst/point?refe...
+Execute scheme: servicetoss://mobility?type=ELE...`}</code>
+              </pre>
+              <div className="bg-blue-50 p-3 rounded">
+                <p className="text-sm text-gray-700 mb-2">
+                  <strong>URLScheme은 프론트엔드에서 호출하는 딥링크로, 사용자가 버튼을 누르거나 특정 액션을 취했을 때 다음 페이지를 호출합니다. 제 수중의 데이터는 총 2076의 레코드가 있었는데, 1006건의 고유한 값들이 있었습니다.</strong>
+                </p>
+                <ul className="text-sm text-gray-700 space-y-1 mb-3">
+                  <li>• scheme: 5개</li>
+                  <li>• route: 344개</li>
+                  <li>• params: 882개</li>
+                </ul>
+                <div className="text-sm text-gray-700">
+                  <p className="mb-1">또다른 문제는 로그 메세지만 덜렁 가지고 있다보니, 파라미터값이 882개로 카디널리티가 너무커서 분석에 문제가 생김</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <h4 className="font-semibold text-gray-800 mb-2">이벤트 정의</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white p-3 rounded border">
+                  <h5 className="font-semibold text-blue-600 mb-2">도메인별 분포</h5>
+                  <ul className="text-sm space-y-1">
+                    <li><strong>supertoss</strong>: 1,351개 (65%) - 메인 앱</li>
+                    <li><strong>servicetoss</strong>: 570개 (27%) - 부가 서비스</li>
+                    <li><strong>securitiestoss</strong>: 73개 (4%) - ??</li>
+                    <li><strong>banktoss</strong>: 72개 (3%) - 은행 특화</li>
+                    <li><strong>intoss</strong>: 10개 (0.5%) - 내부 기능</li>
+                  </ul>
+                </div>
+                <div className="bg-white p-3 rounded border">
+                  <h5 className="font-semibold text-green-600 mb-2">분석 결과</h5>
+                  <div className="text-sm text-gray-700">
+                    <p className="mb-2">
+                      이게 iOS 디바이스에서 생성되었고, 총 3개의 도메인에서 수집되었으며,
+                      두 도메인의 데이터는 똑같았고, 로그파일과 실제 이벤트 발생 일자가 일치하는걸 봐서
+                      디바이스에서만 생성된 데이터라는점.
+                    </p>
+                    <p className="font-semibold text-orange-600">
+                      그런데 이게 내가 항상 액션할때만 생성되는건지에 대한 의문이 있었다.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+          <div className="space-y-6">
+            {/* 도메인 카디널리티 줄이기 */}
             <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
                 <h3 className="text-xl font-bold text-gray-900 mb-1">
-                  <span className="text-sm text-blue-600 font-medium mr-3">02</span>토스뱅크 거래내역과 앱 이벤트 결합 분석
+                  <span className="text-sm text-blue-600 font-medium mr-3">04</span>도메인 카디널리티를 줄이기 위한 방법
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  금융 거래를 앱 내부 이벤트와 동일한 단위로 간주하고 분석을 진행했습니다.
+                  344개 Route → 카테고리별 분류 체계 구축
                 </p>
               </div>
-              
+
               <div className="p-6">
-                <div className="space-y-4">
-                  <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">시간 근접 분석</h4>
-                    <p className="text-gray-700 leading-relaxed text-sm">
-                      전체 거래 중 약 <strong>4%</strong>만이 거래 시각 60분 내에 주요 앱 이벤트(Startup finish, AirDrop start)가 존재했습니다. 
-                      가장 많이 매칭된 이벤트는 Startup finish였고, 일부는 AirDrop 스캔 직후에 거래가 기록되기도 했습니다. 즉, 토스앱을 키고 
-                      이는 거래가 <strong>토스 앱 외 채널에서 발생</strong>했다고 할 수 있습니다.
+                <div className="space-y-6">
+                  <div className="mb-4">
+                    <h4 className="font-bold text-blue-600 mb-3">🏗️ 도메인별 카테고리 구조</h4>
+                    <p className="text-gray-700 text-sm mb-4">
+                      scheme 5개, route 344개, params 882개의 높은 카디널리티를 도메인별 카테고리로 분류하여 관리 가능한 수준으로 축소
                     </p>
                   </div>
 
+                  {/* SUPERTOSS */}
+                  <div className="mb-6">
+                    <h5 className="font-semibold text-gray-800 mb-3">SUPERTOSS (1,351건 → 7개 카테고리)</h5>
+                    <Table
+                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                      rows={[
+                        ['supertoss_credit', '258', '19.1%', '1개', '신용 서비스 (/lab 중심)'],
+                        ['supertoss_account', '262', '19.4%', '8개', '계좌 관리 전반'],
+                        ['supertoss_payment', '192', '14.2%', '11개', '소비/송금/결제'],
+                        ['supertoss_investment', '164', '12.1%', '2개', '투자 포트폴리오'],
+                        ['supertoss_home', '133', '9.8%', '8개', '메인 화면/홈'],
+                        ['supertoss_info', '120', '8.9%', '7개', '내역/상세/검색'],
+                        ['supertoss_other', '222', '16.4%', '60개', '기타 모든 기능']
+                      ]}
+                      className="text-xs"
+                    />
+                  </div>
+
+                  {/* SERVICETOSS */}
+                  <div className="mb-6">
+                    <h5 className="font-semibold text-gray-800 mb-3">SERVICETOSS (570건 → 6개 카테고리)</h5>
+                    <Table
+                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                      rows={[
+                        ['servicetoss_other', '317', '55.6%', '137개', '분류되지 않은 다양한 서비스'],
+                        ['servicetoss_rewards', '100', '17.5%', '20개', '포인트/이벤트/래플'],
+                        ['servicetoss_mobility', '65', '11.4%', '5개', '교통/모빌리티 서비스'],
+                        ['servicetoss_government', '38', '6.7%', '12개', '세금/정부 서비스'],
+                        ['servicetoss_housing', '28', '4.9%', '8개', '부동산/청약'],
+                        ['servicetoss_commerce', '22', '3.9%', '7개', '쇼핑/공동구매']
+                      ]}
+                      className="text-xs"
+                    />
+                  </div>
+
+                  {/* SECURITIESTOSS */}
+                  <div className="mb-6">
+                    <h5 className="font-semibold text-gray-800 mb-3">SECURITIESTOSS (73건 → 3개 카테고리)</h5>
+                    <Table
+                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                      rows={[
+                        ['securitiestoss_stocks', '56', '76.7%', '30개', '개별 종목 (US, AMX, NAS 등)'],
+                        ['securitiestoss_info', '14', '19.2%', '6개', '투자 정보/이벤트'],
+                        ['securitiestoss_other', '3', '4.1%', '2개', '기타 기능']
+                      ]}
+                      className="text-xs"
+                    />
+                  </div>
+
+                  {/* BANKTOSS */}
+                  <div className="mb-6">
+                    <h5 className="font-semibold text-gray-800 mb-3">BANKTOSS (72건 → 3개 카테고리)</h5>
+                    <Table
+                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                      rows={[
+                        ['banktoss_detail', '34', '47.2%', '8개', '상세 정보/거래 내역'],
+                        ['banktoss_other', '32', '44.4%', '14개', '기타 은행 서비스'],
+                        ['banktoss_home', '6', '8.3%', '2개', '홈 화면']
+                      ]}
+                      className="text-xs"
+                    />
+                  </div>
+
+                  {/* INTOSS */}
+                  <div className="mb-6">
+                    <h5 className="font-semibold text-gray-800 mb-3">INTOSS (10건 → 1개 카테고리)</h5>
+                    <Table
+                      headers={['카테고리', '건수', '비율', 'Route 수', '설명']}
+                      rows={[
+                        ['intoss_games', '10', '100%', '8개', '내부 게임들']
+                      ]}
+                      className="text-xs"
+                    />
+                  </div>
+
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-bold text-gray-900 mb-2">카테고리화 결과</h4>
+                    <div className="text-sm text-gray-700 space-y-2">
+                      <p>• <strong>Route 344개 → 카테고리 20개</strong>로 약 94% 차원 축소 달성</p>
+                      <p>• 도메인별 특성을 반영한 의미 있는 분류 체계 구축</p>
+                      <p>• 분석 및 시각화가 가능한 수준의 카디널리티 확보</p>
+                      <p>• 향후 새로운 route 추가 시 기존 카테고리에 매핑 가능한 확장성 확보</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 분석 시리즈 2: 세션 구분하기 */}
+            <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+              <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  <span className="text-sm text-blue-600 font-medium mr-3">05</span>세션 구분하기
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  사용자 행동을 의미있는 세션 단위로 구분하여 분석을 진행했습니다.
+                </p>
+              </div>
+
+              <div className="p-6">
+                <div className="mb-6">
+                  <div className="bg-gray-200 rounded-lg shadow-md p-4">
+                    <img
+                      src="/session.png"
+                      alt="세션 구분 분석 차트"
+                      className="w-full rounded-lg"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500 text-center mt-2">
+                    세션 간격 분포와 누적 분포 - 사용자 행동 패턴 분석을 위한 세션 정의
+                  </p>
+                </div>
+
+                <div className="space-y-4">
                   <div className="space-y-3">
-                    <h4 className="font-bold text-blue-600">일자별 상관관계</h4>
+                    <h4 className="font-bold text-blue-600">세션 정의 방법론</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
-                      일평균 거래금액과 일간 로그 수는 피어슨 계수 0.64, AirDrop 카운트와는 0.59로 상관관계를 보였습니다. 
-                      일간 거래 합계와 Startup finish 횟수의 상관도 0.39로, 앱을 자주 실행한 날에 총 지출도 늘어나는 경향을 확인했습니다. 
-                      따라서, 개별 일 단위로 보면 <strong>앱 사용량과 금융 활동이 함께 증가하는 경향이 있다</strong>고 할 수 있습니다.
+                      URLScheme 이벤트 간의 시간 간격을 분석하여 의미있는 세션을 구분했습니다.
+                      10분(600초) 기준으로 세션을 나누어 자연스러운 사용자 행동 단위를 정의했습니다.
+                    </p>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="font-bold text-blue-600 mb-3">세션 구분 SQL 쿼리</h4>
+                    <pre className="bg-gray-900 text-gray-100 p-4 rounded text-xs overflow-x-auto">
+                      <code>{`WITH urlscheme_sessions AS (
+  SELECT
+    event_time,
+    CASE
+      WHEN LAG(event_time) OVER (ORDER BY event_time) IS NULL THEN 1
+      -- 10분(600초) 기준으로 변경 - 그래프에서 자연스러운 분리점
+      WHEN EXTRACT(EPOCH FROM (event_time - LAG(event_time) OVER (ORDER BY event_time))) >= 600 THEN 1
+      ELSE 0
+    END AS new_session_flag
+  FROM fact_app_logs
+  WHERE module_name = 'URLScheme'
+),
+
+urlscheme_with_session_id AS (
+  SELECT
+    event_time AS session_start,
+    SUM(new_session_flag) OVER (ORDER BY event_time ROWS UNBOUNDED PRECEDING) AS session_id
+  FROM urlscheme_sessions
+),
+
+session_windows AS (
+  SELECT
+    session_id,
+    session_start,
+    -- 세션 윈도우를 20분으로 설정 (10분 기준 + 여유분)
+    session_start + INTERVAL '20 minutes' AS session_end
+  FROM urlscheme_with_session_id
+),
+
+session_events AS (
+  SELECT
+    f.*,
+    s.session_id,
+    s.session_start,
+    s.session_end
+  FROM fact_app_logs f
+  JOIN session_windows s
+    ON f.event_time >= s.session_start
+    AND f.event_time <= s.session_end
+)
+
+SELECT
+  CAST(session_start AS DATE) AS event_date,
+  session_id,
+  session_start,
+  session_end,
+  MAX(event_time) AS last_activity,
+  EXTRACT(EPOCH FROM (MAX(event_time) - session_start)) AS actual_session_length,
+  COUNT(*) AS event_count,
+  COUNT(*) FILTER (WHERE module_name = 'URLScheme') AS urlscheme_event_count
+FROM session_events
+GROUP BY session_id, session_start, session_end
+ORDER BY session_start;`}</code>
+                    </pre>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="font-bold text-blue-600">세션 윈도우 최적화</h4>
+                    <p className="text-gray-700 leading-relaxed text-sm">
+                      세션 윈도우를 20분으로 설정하여 연속적인 사용자 액션을 하나의 의도로 그룹화했습니다.
+                      이를 통해 단순한 이벤트 로그에서 <strong>사용자 여정과 의도를 파악할 수 있는 구조</strong>로 변환했습니다.
                     </p>
                   </div>
 
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-bold text-gray-900 mb-2">결론</h4>
+                    <h4 className="font-bold text-gray-900 mb-2">세션 분석 결과</h4>
                     <p className="text-gray-700 leading-relaxed text-sm">
-                      인앱 내부에서 금융을 동반한 서비스(송금, 결제, 커머스 등)는 거의 이용하지 않았다고 볼 수 있습니다. 
-                      그러나 일자별로 보면 금융 활동이 많은 날에는 토스앱 실행 빈도 역시 증가하는 양상을 보입니다. 
-                      토스앱을 직접적인 결제,송금 채널보다 <strong>금융 활동 전반을 확인,관리하는 채널로 사용함</strong>을 알 수 있습니다. 
-                      실제로 토스증권을 주로 이용하므로, 토스증권 데이터를 수집하여 이용행태 분석을 고도화 할 수 있을 것으로 보입니다.
+                      세션 기반 분석을 통해 사용자의 앱 내 행동 패턴과 기능 탐색 과정을 체계적으로 추적할 수 있게 되었습니다.
+                      개별 이벤트가 아닌 <strong>연결된 행동 시퀀스로 사용자 의도를 이해</strong>할 수 있는 기반을 마련했습니다.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="mb-12">
+            {/* 주요 분석 결과 */}
+            <div className="bg-white border border-gray-300 rounded-2xl shadow-sm overflow-hidden">
+              <div className="bg-gray-100 px-6 py-3 border-b border-gray-200">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  <span className="text-sm text-blue-600 font-medium mr-3">06</span>주요 분석 결과
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  데이터 분석을 통해 도출한 핵심 인사이트와 발견사항
+                </p>
+              </div>
+
+              <div className="p-6">
+                <div className="space-y-6">
+                  <div className="mb-6">
+                    <h4 className="font-bold text-blue-600 mb-3">🔥 세션 증가 요인 TOP 4</h4>
+                    <div className="bg-gray-200 rounded-lg p-4">
+                      <Table
+                        headers={['순위', '요인', '최대 증가율', '상관계수', '핵심 임계값']}
+                        rows={[
+                          ['1', '🏃 Movement', '+3,597.7%', '0.471', '10,000보+'],
+                          ['2', '📸 Photo', '+326.9%', '0.436', '4-10장'],
+                          ['3', '💰 Transaction', '+393.6%', '0.465', '2-3건 중대액'],
+                          ['4', '📝 Notes', '+271.0%', '-', 'Daily 노트']
+                        ]}
+                        className="text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <h4 className="font-bold text-blue-600 mb-3">앱 내부 패턴 → 거래 전환 분석</h4>
+                    <div className="bg-gray-200 rounded-lg p-4">
+                      <Table
+                        headers={['이벤트 명', '이벤트 키', '평균 전환 시간', '중간값 전환 시간', '총 전환 수']}
+                        rows={[
+                          ['소비 내역 조회', 'supertoss|home|/consumption', '25.0분', '5.2분', '30회'],
+                          ['은행탭 계좌', 'supertoss|banktab|/account', '25.5분', '7.6분', '93회'],
+                          ['소비 내역 상세', 'supertoss|home|/consumption/transaction/detail', '26.3분', '7.3분', '59회'],
+                          ['계좌 상세 진입', 'supertoss|home|/dst/account', '29.2분', '11.8분', '62회'],
+                          ['투자 포트폴리오 조회', 'supertoss|home|/investment-portfolio', '31.4분', '15.7분', '86회']
+                        ]}
+                        className="text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </section>
       </div>
     </div>
