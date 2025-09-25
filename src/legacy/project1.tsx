@@ -917,7 +917,7 @@ transformed = transformed.filter(
             <div className="mb-4">
               <p className="text-base text-gray-700 mb-3">
                 더 자세히 로그를 들여다보면, 로그가 분명 프론트엔드에서 발생한 데이터라는 것을 알 수 있었습니다. &apos;*.log&apos;날짜와 로그의 날짜가 모두 일치하는 것으로 보아 데이터 발생지점과 적재지점이 같기 때문입니다. 즉, 기기에서 오롯이 생성된 데이터라고 판단할 수 있습니다.
-                여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 캐시 실패의 경우를 로깅하는 데이터였습니다. 
+                여기서 INFO 레벨로 찍힌 Cache로그가 69.5%로 과반수를 차지했는데, 대부분 캐시 실패의 경우를 로깅하는 데이터였습니다. 즉, 이 로그는 사용자 행위에 의해 발생한 것이 아니라, 부수적으로 생성된 것으로 보입니다.
               </p>
               <div className="mb-3">
                 <Image
@@ -932,8 +932,8 @@ transformed = transformed.filter(
                 각 모듈별로 로그의 의미를 살펴보았을때, URLScheme는 확실히 나의 액션으로부터 생성된 데이터였습니다.
               </p>
               <p className="text-base text-gray-700 mb-4">
-                URLScheme은 <strong>프론트엔드에서 호출하는 딥링크</strong>인데 버튼이나 액션에 따라 다음 페이지를 열어 줍니다. 
-                이 URLScheme을 domain, route, parameter로 분리하였습니다. scheme은 supertoss,servicetoss등과 같은 식별자이고, route는 어떤 화면을 호출할지 식별할 식별자입니다. params은 세부정보를 담고있는데 필드값의 조합이 상당히 다양했습니다. 
+                URLScheme은 <strong>프론트엔드에서 호출하는 딥링크</strong>인데 버튼이나 액션에 따라 다음 페이지를 열어 줍니다. 따라서 URLScheme을 직접적인 행동단위 기록으로 활용하기로 했습니다.
+                URLScheme을 scheme, route, parameter로 분리하였는데요. scheme은 supertoss,servicetoss등과 같은 식별자이고, route는 어떤 화면을 호출할지 식별할 식별자입니다. params은 세부정보를 담고있는데 필드값의 조합이 상당히 다양했습니다. 
                 예를들어 referrer 같은 필드값은 호출의 출처를 나타내어 사용자 행동 경로나 이벤트 추적에 활용할 수 있을 것으로 판단됩니다.
               </p>
               <p>  
